@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&family=Itim&family=Ubuntu&display=swap');
+.about-communex{
+    padding-top: 100px;
+    min-height: 100vh;
+    color:var(--color);
+    background-color: var(--background-color);
+    text-align: center;
+}
+.about-communex h4{
+    margin: 30px 0;
+    opacity: 0.7;
+    
+
+}
+.about-communex >p{
+    margin:10px;
+    font-size: 40px;
+    letter-spacing: 2px;
+    font-family: 'Anton', sans-serif;
+}
+.highlighted-text{
+    background: linear-gradient(to right bottom, #3078d0 , #7011e4 );
+    -webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+.social-community-img{
+    margin: 50px;
+    width:50%;
+}
+.meet-our-team{
+    width:100%;
+    padding:20px;
+    
+
+}
+.team-container{
+    margin-top: 40px;
+    display:grid;
+    grid-template-columns: 30% 30% 30%;
+    gap: 25px;
+    padding:30px 15%;
+
+}
+.team-card{
+    width:100%;
+    height: 410px;
+    border-radius: 10px;
+    border: var(--border);
+    
+    
+
+}
+.team-card> img{
+    width:100%;
+    height: 280px;
+    top:0;
+    border-radius:10px 10px 0 0;
+
+}
+.team-member-name{
+    color:rgb(254, 254, 254);
+    font-weight: 800;
+    position: relative;
+    bottom:45px;
+    left:10px;
+    text-align: start;
+
+}
+.team-member-name >p{
+    font-size: 12px;
+    
+    
+}
+.team-card >h4{
+    position: relative;
+    margin: 0;
+    bottom: 30px;
+}
+.short-bio{
+    margin: 0;
+    position: relative;
+    bottom:25px;
+    padding:  0 10px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'Cormorant Garamond', serif;
+}
+.team-socials{
+    display:flex;
+   justify-content: center;
+    
+
+}
+.team-social-button{
+    background-color: transparent;
+    margin: 0 10px;
+    position: relative;
+    bottom: 15px;
+    height:30px;
+    width: 30px;
+    border: var(--border);
+    font-size: 17px;
+    padding: 5px;
+    border-radius: 7px;
+
+}
+@media only screen 
+  and (max-width: 450px) 
+   { 
+   
+
+    .team-container{
+        margin-top: 40px;
+        display:grid;
+        grid-template-columns: 100% ;
+        padding:10px;
+    }
+    
+    
+}
+

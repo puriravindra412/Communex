@@ -1,0 +1,123 @@
+@import '../App.css';
+
+.online-dot{
+    width:12px;
+    height:12px;
+    border-radius: 12px;
+    background-color: rgb(36, 245, 36);
+    position: absolute;
+    margin:10px 35px;
+    border: 2px solid white;
+}
+
+.chat-list{
+    height: 100vh;
+    border: var(--border);
+    padding: 10px;
+     
+}
+.chat-list h4{
+    margin: 5px;
+    padding:15px;
+    border-bottom: var(--border);
+} 
+
+.chat-user-card{
+   width:100;
+   display:flex;
+   margin: 5px ;
+   height: 60px;
+   padding: 10px;
+   
+
+}
+.chat-list div :hover{
+    
+    background-color: var(--outer-div-background);
+
+}
+
+.chat-user-card img{
+    width:40px;
+    height: 40px;
+    border-radius: 40px;
+}
+
+ .chat-user-information{
+    margin: 5px 20px;
+
+}
+
+.chat-user-information strong{
+    font-size: 12px;
+}
+.chat-user-information p{
+    font-size: 10px;
+}
+
+.chat-window{
+    height: 100vh;
+    border: var(--border);
+    
+}
+.chat-user-more-button{
+    margin-left: auto;
+
+}
+.chat-heading{
+    border-bottom: var(--border);
+
+}
+.chat-msg-box{
+    width: calc(100%-20px);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    overflow: scroll;
+    background-color: var(--outer-div-background);
+
+}
+
+.chat-sender {
+    bottom: 0;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    height: 3.5rem;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem;
+    border-radius: 1rem;
+    align-self: end;
+}
+.chat-sender>input{
+    height: 70%;
+    background-color: rgb(236, 236, 236);
+    border-radius: 0.5rem;
+    border: none;
+    outline: none;
+    flex  :1 ;
+    font-size: 14px;
+    padding: 0px 15px 0px 15px;
+}
+.chat-sender>div:nth-of-type(1)
+{
+    background: rgb(233, 233, 233);
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    cursor: pointer
+}
+.chat-sender>div{
+    height: 70%;
+    padding: 0px 15px 0px 15px;
+}
+
+@media only screen and (max-width:450px){
+    .chat-container{
+        grid-template-columns: 100%;
+    }
+}

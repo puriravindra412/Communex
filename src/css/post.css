@@ -1,0 +1,144 @@
+@import '../App.css';
+.postbox{
+    min-height: 100vh;
+  width: 100%;
+  color:var(--color);
+    background-color: var( --background-color);
+
+}
+
+.post-container-box{
+    
+    z-index: auto;
+    height: auto;
+    padding:100px 2% 10vh 15%;
+   align-items: center;
+    
+}
+.post-container-box h1{
+    padding: 20px;
+}
+.post-image-banner{
+    
+    
+    height:40vh;
+    width: 70%;
+    margin: 25px 0;
+}
+.html-content{
+    color:var(--color) !important;
+    background-color: var( --background-color);
+    padding: 20px;
+}
+.html-content img{
+width:100% !important;
+text-align: center !important;
+}
+
+.create-post-form{
+    margin:5%;
+    border: var(--border);
+    padding:20px;
+    background-color: var(--background-color);
+    color: var(--color);
+
+}
+.create-post-form input[name="heading"]{
+    
+    width:80%;
+    height:80px;
+    border:none;
+    margin:20px 10%;
+    padding: 0 20px ;
+    font-size:xx-large;
+    font-weight: 800;
+    background-color: var(--background-color);
+    color: var(--color);
+
+}
+.previewImage{
+    position: relative;
+    /* display: flex; */
+}
+
+.previewImage>svg{
+    position: absolute;
+    right: 1rem;
+    top: 0.5rem;
+    cursor: pointer;
+}
+
+.previewImage>img{
+    width: 100%;
+    max-height: 20rem;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+.create-post-form button{
+    margin:20px 10%;
+    padding: 0 20px ;
+    height:40px;
+    border:var(--border);
+    border-radius: 30px;
+
+
+}
+.create-post-form input[name="tags"]{
+    display: block;
+    width:80%;
+    height:50px;
+    border:none;
+    margin:20px 10%;
+    padding: 0 20px ;
+    font-size:large;
+    font-weight: 800;
+    background-color: var(--background-color);
+    color: var(--color);
+
+}
+.create-post-form select{
+    margin:20px 10%;
+    padding: 10px 10px ;
+    width:80%;
+    height: 40px;
+    border: var(--border);
+    border-radius: 15px;
+    background-color: var(--background-color);
+    color: var(--color);
+}
+
+
+.container-top-new{
+    align-items: center;
+}
+
+@media only screen 
+  and (max-width: 450px) 
+   { 
+    .postbox{
+       
+    }
+    .post-container-box{
+        width: 100%;
+        z-index: auto;
+        height: auto;
+        padding:100px 5px;
+       
+       
+    }
+    .post-image-banner{
+        height:20vh;
+        width: 92%;
+        margin:10px;
+    }
+    .create-post-form input[name="heading"]{
+        width:100%;
+        margin: 5px;
+        font-size:large;
+    }
+    .create-post-form input[name="desc"]{
+        width:100%;
+        margin: 5px;
+        font-size:large;
+      margin:5px;}
+   }
