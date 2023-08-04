@@ -1,137 +1,116 @@
-@import '../App.css';
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&family=Itim&family=Ubuntu&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=GFS+Neohellenic&display=swap');
-.login-container{
-    width:100%;
-    height: 100vh;
-    
-    
-    
+@import "../App.css";
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&family=Itim&family=Ubuntu&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=GFS+Neohellenic&display=swap");
+.login-container {
+  width: 100%;
+  height: 100vh;
 }
-.login-left-box .subhaeding{
-    text-align: center;
-    font-size: 15px;
-    font-family: 'GFS Neohellenic', sans-serif;
-
+.login-left-box .subhaeding {
+  text-align: center;
+  font-size: 15px;
+  font-family: "GFS Neohellenic", sans-serif;
 }
-.login-left-box .heading{
-    font-family: 'Cormorant Garamond', serif;
-   font-size: 30px;
-   text-align: center;
-   color:rgb(165, 51, 232);
+.login-left-box .heading {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 30px;
+  text-align: center;
+  color: rgb(165, 51, 232);
 }
-.login-box{
-   
-   
-    padding: 10px;
+.login-box {
+  padding: 10px;
 }
-
 
 .anime {
-    width:100%;
-    margin: auto auto;
-   
-    
+  width: 100%;
+  margin: auto auto;
 }
-.login-box-main{
-    display: grid;
-   grid-template-columns: 50% 50%;
-   margin: 10px;
+.login-box-main {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  margin: 10px;
 }
 
-.login-left-box{
-    padding: 30px;
-    align-items: center;
-    
+.login-left-box {
+  padding: 30px;
+  align-items: center;
 }
 
-.login-right-box{
-    width: 100%;
-    padding: 10px;
+.login-right-box {
+  width: 100%;
+  padding: 10px;
 }
 
-.login-text{
-  
-    font-size: 25px;
-    font-weight: 500;
-    letter-spacing: 2px;
+.login-text {
+  font-size: 25px;
+  font-weight: 500;
+  letter-spacing: 2px;
 }
 
-
-
-.login-form{
-    margin:20px;
-    width:100%;
-    display: flex;
-    flex-direction:column;
-    
+.login-form {
+  margin: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.login-right-box input{
-    width:300px;
-    height:40px;
-    border:0.5px solid rgba(219, 218, 218, 0.886);
-    border-radius: 10px;
-    margin:10px 0;
-    padding: 10px;
+.login-right-box input {
+  width: 300px;
+  height: 40px;
+  border: 0.5px solid rgba(219, 218, 218, 0.886);
+  border-radius: 10px;
+  margin: 10px 0;
+  padding: 10px;
 }
 .login-form button {
-    width:200px;
-    margin:10px 50px;
-    height:30px;
-    border-radius: 10px;
-    border:none;
-    background-color:rgba(123, 193, 250, 0.979);
-    color:var(--color);
+  width: 200px;
+  margin: 10px 50px;
+  height: 30px;
+  border-radius: 10px;
+  border: none;
+  background-color: rgba(123, 193, 250, 0.979);
+  color: var(--color);
 }
 
-.horizontal-line{
-    margin:10px 40px;
-    width:250px;
-
+.horizontal-line {
+  margin: 10px 40px;
+  width: 250px;
 }
 
-.or-text{
-    font-size: 15px;
-    font-weight: 300;
-    margin:5px 160px;
+.or-text {
+  font-size: 15px;
+  font-weight: 300;
+  margin: 5px 160px;
 }
 
-.forget-password-button{
-    margin:10px 90px 10px 110px;
-    border:none;
-    background-color: transparent;
-
+.forget-password-button {
+  margin: 10px 90px 10px 110px;
+  border: none;
+  background-color: transparent;
 }
 
-.sign-up-link{
-    width:300px;
-    height:40px;
-    border:0.5px solid rgba(219, 218, 218, 0.886);
-    margin:10px 30px;
-    border-radius: 10px;
-    padding:10px 20px;
+.sign-up-link {
+  width: 300px;
+  height: 40px;
+  border: 0.5px solid rgba(219, 218, 218, 0.886);
+  margin: 10px 30px;
+  border-radius: 10px;
+  padding: 10px 20px;
 }
 
-.sign-up{
-    color:rgba(76, 171, 249, 0.979);
-    background-color: transparent;
-    border:none;
+.sign-up {
+  color: rgba(76, 171, 249, 0.979);
+  background-color: transparent;
+  border: none;
 }
 
-@media only screen 
-  and (max-width: 450px) 
-   { 
-    .login-box-main{
-        grid-template-columns: 100%;
-
-   }
-   .login-left-box .heading{
-    font-family: 'Cormorant Garamond', serif;
-   font-size: 20px;
-   text-align: center;
-   margin-bottom: 20px;
-}
-   
-
+@media only screen and (max-width: 450px) {
+  .login-box-main {
+    grid-template-columns: 100%;
+  }
+  .login-left-box .heading {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
 }

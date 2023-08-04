@@ -4,7 +4,7 @@
   grid-template-columns: 22% auto;
   gap: 1rem;
   padding-top: 2px;
-  color:var(--color);
+  color: var(--color);
   background-color: var(--background-color);
   min-height: 100vh;
 }
@@ -21,36 +21,31 @@
   flex-direction: column;
   gap: 1rem;
   background: var(--cardColor);
-  
+
   padding: 1rem;
   height: auto;
   min-height: 80vh;
   overflow: scroll;
-  
 }
-.chat-list-header{
+.chat-list-header {
   display: flex;
 }
-.chat-list-header>button{
-
-margin-left: auto;
-border:none;
-background-color: transparent;
-font-size:20px;
+.chat-list-header > button {
+  margin-left: auto;
+  border: none;
+  background-color: transparent;
+  font-size: 20px;
 }
-
 
 .Chat-list {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   border-top: var(--border);
-
 }
-.single-user-chat :hover{
-  border-radius:10px;
+.single-user-chat :hover {
+  border-radius: 10px;
   background-color: var(--outer-div-background);
-
 }
 .Right-side-chat {
   display: flex;
@@ -58,7 +53,6 @@ font-size:20px;
   gap: 1rem;
   border: var(--border);
 }
-
 
 .conversation {
   border-radius: 0.5rem;
@@ -78,7 +72,6 @@ font-size:20px;
   height: 1rem;
 }
 
-
 .chatbox-empty-message {
   display: flex;
   align-self: center;
@@ -86,13 +79,12 @@ font-size:20px;
   font-size: 20px;
 }
 
-
-@media only screen and (max-width:450px){
- .Chat {
+@media only screen and (max-width: 450px) {
+  .Chat {
     grid-template-columns: auto;
   }
-  
-   .follower.conversation>div>.name{
+
+  .follower.conversation > div > .name {
     display: none;
-   }
+  }
 }

@@ -3,16 +3,15 @@ import React, { useRef, useState } from "react";
 import "./Chat.css";
 import { useEffect } from "react";
 import { userChats } from "../../api/ChatRequests";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
-import { Conversations } from "./Conversations";
-import {MdArrowBack } from "react-icons/md";
+import  Conversations  from "./Conversations";
+import { MdArrowBack } from "react-icons/md";
 import ChatBox from "./ChatBox";
 
 import { useNavigate } from "react-router-dom";
 
 const Chat = () => {
-  
   const socket = useRef();
   const user = useSelector((state) => state.authReducer.authData);
   const navigate = useNavigate();
@@ -21,7 +20,7 @@ const Chat = () => {
   const [currentChat, setCurrentChat] = useState(null);
   const [sendMessage, setSendMessage] = useState(null);
   const [receivedMessage, setReceivedMessage] = useState(null);
-  
+
   // Get the chat in chat section
   useEffect(() => {
     const getChats = async () => {
@@ -46,27 +45,18 @@ const Chat = () => {
 
   // Send Message to socket server
   useEffect(() => {
-    if (sendMessage!==null) {
+    if (sendMessage !== null) {
       socket.current.emit("send-message", sendMessage);
-      
-  }
-}, [sendMessage]);
-
-
+    }
+  }, [sendMessage]);
 
   // Get the message from socket server
   useEffect(() => {
     socket.current.on("recieve-message", (data) => {
-      console.log(data)
+      console.log(data);
       setReceivedMessage(data);
-    }
-
-    );
+    });
   }, []);
-
- 
-  
-
 
   const checkOnlineStatus = (chat) => {
     const chatMember = chat.members.find((member) => member !== user._id);
@@ -76,53 +66,50 @@ const Chat = () => {
 
   return (
     <div>
-    
-    
-    <div className="Chat">
-      {/* Left Side */}
-      
-      <div className="Left-side-chat">
-        
-        <div className="Chat-container">
-          <div className="chat-list-header">
-          <h2>Chats</h2>
-          <button onClick={() => navigate(-1)}><MdArrowBack /></button>
-          </div>
-          
-          <div className="Chat-list">
-            {chats.map((chat) => (
-              <div className="single-user-chat"
-                onClick={() => {
-                  setCurrentChat(chat);
-                }}
-              >
-                <Conversations
-                  data={chat}
-                  currentUser={user._id}
-                  online={checkOnlineStatus(chat)}
-                  receivedMessage={receivedMessage}
-                />
-              </div>
-            ))}
+      <div className="Chat">
+        {/* Left Side */}
+
+        <div className="Left-side-chat">
+          <div className="Chat-container">
+            <div className="chat-list-header">
+              <h2>Chats</h2>
+              <button onClick={() => navigate(-1)}>
+                <MdArrowBack />
+              </button>
+            </div>
+
+            <div className="Chat-list">
+              {chats.map((chat) => (
+                <div
+                  className="single-user-chat"
+                  onClick={() => {
+                    setCurrentChat(chat);
+                  }}
+                >
+                  <Conversations
+                    data={chat}
+                    currentUser={user._id}
+                    online={checkOnlineStatus(chat)}
+                    receivedMessage={receivedMessage}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Right Side */}
+        {/* Right Side */}
 
-      <div className="Right-side-chat">
-        <div style={{ width: "20rem", alignSelf: "flex-end" }}>
-         
+        <div className="Right-side-chat">
+          <div style={{ width: "20rem", alignSelf: "flex-end" }}></div>
+          <ChatBox
+            chat={currentChat}
+            currentUser={user._id}
+            setSendMessage={setSendMessage}
+            receivedMessage={receivedMessage}
+          />
         </div>
-        <ChatBox
-          chat={currentChat}
-          currentUser={user._id}
-          setSendMessage={setSendMessage}
-          receivedMessage={receivedMessage}
-        />
       </div>
-    </div>
-    
     </div>
   );
 };

@@ -1,161 +1,193 @@
-@import '../App.css';
-.profile-page-container{
-    height: 100vh;
-    color: var(--color);
-   width:100%;
-   background-color: var(--background-color);
-   
+@import "../App.css";
+.profile-page-container {
+  min-height: 100vh;
+  color: var(--color);
+  width: 100%;
+  background-color: var(--background-color);
 }
 
-.profile-container-box{
-   
-   
-    z-index: auto;
-    height: auto;
-   
-    display:grid;
+.profile-container-box {
+  width: 90%;
+  z-index: auto;
+  height: auto;
+
+  display: grid;
   grid-template-columns: 25% 75%;
-    color:var(--color);
-    background-color: var( --background-color);
+  color: var(--color);
+  background-color: var(--background-color);
 }
 
-.profile-main{
-    width:90%;
-    margin:5rem 0 15% 0;
-    position: relative;
+.profile-main {
+  width: 100%;
+  margin: 5rem 0 15% 0;
+}
+.profile-photo-box {
+  float: left;
+  margin: 20vh 0 0 7%;
+  padding: 10px;
+  position: absolute;
+  z-index: 10;
+  width: 150px;
+  height: 150px;
+  border-radius: 100px;
+  background-color: var(--background-color);
+}
+.profile-img {
+  width: 130px;
+  height: 130px;
+  border-radius: 100px;
+}
+.profile-banner {
+  width: 100%;
+  height: 30vh;
+  border-radius: 10px;
+}
+.profile-bio-first-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.profile-bio-username {
+  margin: 80px 0 0 25px;
+  letter-spacing: 1px;
+  display: flex;
+  width: 150px;
+  flex-direction: column;
+}
+.profile-bio-username p {
+  font-size: 10px;
+  font-weight: 400;
+}
+.profile-bio-edit {
+  display: flex;
+  flex-direction: row;
+  margin: 10px 20px 10px 100px;
+}
+.profile-bio-edit button {
+  max-width: 120px;
+  height: 35px;
+  border: none;
+  padding: 5px;
+  margin: 10px 10px;
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+  background-color: var(--button);
+  font-size: 17px;
+  color: aliceblue;
+  
+}
+.profile-bio {
+  padding:15px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  margin: 10px;
+  
+}
 
-    
+.profile-bio-info-box{
+  margin: 10px;
+ 
+  border-radius: 20px;
+  padding:10px;
+  text-align: start;
+  background-color: var(--outer-div-background);
+  height:280px;
+  box-shadow: var(--box-shadow);
+  
+
 }
-.profile-photo-box{
-    float: left;
-    margin: 20vh 0 0 7%;
-    padding:10px;
-       position: absolute;
-       z-index: 10;
-       width:150px;
-       height:150px;
-       border-radius: 100px;
-       background-color: var(--background-color);
+.profile-bio-info-box> h4{
+  margin: 15px 15px 15px 0;
+  text-align: center;
+  color: #87b8f8;
 }
-.profile-img{
-    width:130px;
-    height:130px;
-    border-radius: 100px;
+
+.profile-bio >.profile-bio-info-box >p {
+  margin: 10px;
 }
-.profile-banner{
-    width:100%;
-    height: 30vh;
-    border-radius: 10px;
+.profile-bio-info-social{
+  margin: 15px;
+  display:flex;
+  flex-direction:row;
+  align-items: center;
+  justify-content: center;
+  
+
 }
-.profile-bio-first-row{
-    display:flex;
-    flex-direction: row;
+.profile-bio .profile-bio-info-box a {
+  margin: 10px;
+  color: var(--color);
+  font-style: italic;
+  text-decoration: none;
+  font-size: 22px;
+  border-radius: 20px;
+  height:35px;
+  width: 35px;
+  padding: 5px;
+  border:var(--border)
+  
+
+}
+.profile-follow-following {
+  display: flex;
+  margin: 15px;
+  justify-content: center;
+  align-items: center;
+
+}
+.follow {
+  margin: 10px;
+ 
+}
+.follow p {
+  text-align: center;
+}
+.user-post {
+}
+.user-post h4 {
+  margin: 20px;
+}
+
+
+@media only screen and (max-width: 450px) {
+  .profile-container-box {
     width: 100%;
-}
-.profile-bio-username{
-    margin: 80px 0 0 25px;
-    letter-spacing: 1px;
-    display:flex;
-    width:150px;
-    flex-direction: column;
-    
-}
-.profile-bio-username p{
-    font-size: 10px;
-    font-weight: 400;
-}
-.profile-bio-edit{
-    display: flex;
-    flex-direction: row;
-    margin: 10px 20px 10px 50px;
-}
-.profile-bio-edit button{
-    width:100px;
-    height: 25px;
-    border:var(--border);
+    grid-template-columns: 100%;
+  }
+
+  .profile-main {
+    width: 100%;
+    margin: 6rem 0 15% 0;
+  }
+  .profile-banner {
+    width: 90%;
+    margin: 0 5%;
+    height: 15vh;
+  }
+  .profile-photo-box {
+    margin: 10vh 0 0 9%;
     padding: 5px;
-    margin: 5px 10px;
-    border-radius: 10px;
-}
-.profile-bio{
-    display: flex;
-    flex-direction: column;
-    margin: 0 25px 25px 25px ;
-   
-    font-size: 15px;
-}
-.profile-bio p{
-    margin: 3px;
-}
-.profile-bio a{
-    color:var(--color);
-    font-style: italic;
-    text-decoration: none;
-    font-size: 12px;
-}
-.profile-follow-following{
-    display: flex;
-    margin: 10px 25px;
-}
-.follow{
-    margin-right: 40px;
-}
-.follow p{
-    font-size: 13px;
-    padding: 5px 10px;
-}
-.user-post{
-    
-
-}
-.user-post h4{
-    margin: 20px;
-
-}
-
-
-
-
-@media only screen 
-  and (max-width: 450px) 
-   {
-    .profile-container-box{
-        grid-template-columns: 100%;
-    }
-
-    .profile-main{
-        width:100%;
-        margin:6rem 0 15% 0;
-        
-    }
-    .profile-banner{
-        width:90%;
-        margin:0 5%;
-        height: 15vh;
-    }
-    .profile-photo-box{
-        
-        margin: 10vh 0 0 9%;
-           padding: 5px;
-           width:80px;
-           height:80px;
-    }
-    .profile-img{
-        width:70px;
-        height:70px;
-        border-radius: 70px;
-    }
-    .profile-bio-username{
-        margin: 40px 0 0 25px;
-       
-    }
-    .profile-bio-edit{
+    width: 80px;
+    height: 80px;
+  }
+  .profile-img {
+    width: 70px;
+    height: 70px;
+    border-radius: 70px;
+  }
+  .profile-bio-username {
+    margin: 40px 0 0 25px;
+  }
+  .profile-bio-edit {
     flex-direction: row;
     margin: 10px 10px 10px auto;
-    }
-    .profile-bio{
-        margin: 0 5%;
-        font-size: 15px;
-    }
-
+  }
+  .profile-bio {
+    padding:15px;
+    display: grid;
+    grid-template-columns: 100%;
+    margin: 10px;
+    
+  }
+  
 }

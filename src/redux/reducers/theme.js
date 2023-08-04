@@ -1,7 +1,7 @@
 import { THEME_CHANGED } from "../actions/theme";
 
 const INITIAL_THEME = {
-  theme: 'lightmode',
+  theme: "lightmode",
 };
 
 const reducer = (state = INITIAL_THEME, action) => {
@@ -12,7 +12,8 @@ const reducer = (state = INITIAL_THEME, action) => {
         theme: action.theme,
       };
 
-    default: return state;
+    default:
+      return state;
   }
 };
 
