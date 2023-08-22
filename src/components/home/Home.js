@@ -13,6 +13,8 @@ export default function Home() {
     localStorage.setItem("active-category", "home");
     console.log("home");
   }, []);
+
+  
   return (
     <div className="app">
       <NavBar />
@@ -24,7 +26,7 @@ export default function Home() {
       </div>
       <ToastContainer
         position="top-right"
-        autoClose={3000}
+        autoClose={1000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

@@ -3,11 +3,10 @@ import NavBar from "../navbar/navBar";
 import "../../css/profile.css";
 import MobileSideBar from "../sideBar/MobileSideBar";
 import SideBar from "../sideBar/SideBar";
-
+import profile from '../../images/profile.jpg'
 import { BsFillPersonDashFill, BsFillPersonPlusFill } from "react-icons/bs";
 import { IoPencil, IoLogoGithub, IoLogoLinkedin } from "react-icons/io5";
 import { IoIosLink } from "react-icons/io";
-import Feed from "../home/Feed";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import * as UserApi from "../../api/UserRequests.js";
@@ -15,8 +14,15 @@ import { followUser, unfollowUser } from "../../redux/actions/UserAction";
 import { RiMessengerLine } from "react-icons/ri";
 import { createChat } from "../../api/ChatRequests";
 import { findChat } from "../../api/ChatRequests";
-import { async } from "react-input-emoji";
-
+import { getTimelinePosts } from "../../redux/actions/PostsAction";
+import FeedCard from "../home/feedCard";
+import BlogFeed from "../home/BlogFeed";
+import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+import { CircularProgress } from "@mui/material";
 const Profile = () => {
   const navigate = useNavigate();
   const params = useParams();
@@ -25,7 +31,15 @@ const Profile = () => {
   const profileUserId = params.id;
   const [follow, setFollow] = useState(!user.following.includes(params.id));
   const [profileUser, setProfileUser] = useState([]);
+  const [activeCategory, setActiveCategory] = useState("home");
+  let { posts, loading } = useSelector((state) => state.postReducer);
+  const [value, setValue] = React.useState('1');
 
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  
   useEffect(() => {
     const fetchProfileUser = async (profileUserId) => {
       console.log("fetching");
@@ -58,9 +72,25 @@ const Profile = () => {
     }
   };
 
+  useEffect(() => {
+    dispatch(getTimelinePosts(params.id));
+  }, []);
+  if (!posts) return "No Posts";
+  if (params.id) posts = posts.filter((post) => post.post.userId === params.id);
+  
+
   const editProfile = profileUser._id === user._id;
   console.log(profileUser);
 
+  const handleCategoryChange = (category) => {
+    setActiveCategory(category);
+  };
+  const timeline=[{
+    "user":profileUser,
+    "recentPosts":posts
+  }
+  ]
+  console.log("timeline",timeline)
   return (
     <div className="profile-page-container">
       <NavBar />
@@ -72,8 +102,8 @@ const Profile = () => {
             <div className="profile-photo-box">
               <img
                 src={
-                  process.env.REACT_APP_PUBLIC_FOLDER +
-                  profileUser.profilePicture
+                  profileUser?.profilePicture&&
+                  profileUser?.profilePicture?profileUser?.profilePicture:profile
                 }
                 alt="profile-img"
                 className="profile-img"
@@ -81,7 +111,7 @@ const Profile = () => {
             </div>
             <img
               src={
-                process.env.REACT_APP_PUBLIC_FOLDER + profileUser.coverPicture
+                 profileUser.coverPicture
               }
               alt="banner"
               className="profile-banner"
@@ -195,11 +225,37 @@ const Profile = () => {
               </div>
             </div>
 
-            
-
-            <div className="user-post">
-              <h4> All Posts</h4>
-              <Feed id={params.id} />
+            <div className="card-container">
+          
+          <Box sx={{ width: '100%', typography: 'body1' }}>
+          <TabContext value={value} >
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <TabList onChange={handleChange} aria-label="lab API tabs example" >
+                <Tab label="Home" value="1" sx={{color:"var(--color)"}}/>
+                <Tab label="Blogs" value="2" sx={{color:"var(--color)"}}/>
+                
+              </TabList>
+            </Box>
+            <TabPanel  sx={{padding:0}} value="1">
+            {loading?<CircularProgress sx={{margin:"30px 45%"}} /> : <div className="category-content">
+            { posts &&
+              posts?.map((post, id) => {
+                  return <FeedCard data={post} key={id} loading={loading}/>;
+                })}
+              </div>}
+          </TabPanel>
+          <TabPanel  sx={{padding:0}} value="2">
+            {loading?<CircularProgress sx={{margin:"30px 45%"}} /> : <div className="category-content">
+            { timeline &&
+              <div className='blog-container' >
+              {timeline.map((blog)=>{
+                return <BlogFeed data={blog}/>
+            })}
+              </div>}
+              </div>}
+          </TabPanel>
+          </TabContext>
+          </Box>
             </div>
           </div>
         </div>

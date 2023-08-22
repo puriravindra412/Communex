@@ -24,8 +24,9 @@ import { Search } from "./components/search/Search";
 import About from "./components/About/About";
 import ChatBoat from "./components/ChatBoat/ChatBoat";
 
-import { ToastContainer } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
+import SavedPost from "./components/post/SavedPost";
 
 function App() {
   const user = useSelector((state) => state.authReducer.authData);
@@ -66,8 +67,12 @@ function App() {
         />
         <Route
           path="/post/:id"
-          element={user ? <Post /> : <Navigate to="../login" />}
+          element={<Post />}
         />
+        <Route
+        path="/my-reading/:id"
+        element={<SavedPost />}
+      />
         <Route
           path="/chat"
           element={user ? <Chat /> : <Navigate to="../login" />}

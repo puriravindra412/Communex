@@ -13,14 +13,14 @@ export const ProfileSidebar = (data) => {
         <div className="profile-box">
           <img
             src={
-              process.env.REACT_APP_PUBLIC_FOLDER + userProfile.profilePicture
+              userProfile.profilePicture
             }
             alt="banner"
             className="profile-img-box"
           ></img>
         </div>
         <img
-          src={process.env.REACT_APP_PUBLIC_FOLDER + userProfile.coverPicture}
+          src={userProfile.coverPicture}
           alt="banner"
           className="banner"
         ></img>

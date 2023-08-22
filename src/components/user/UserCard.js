@@ -4,10 +4,11 @@ import { BsFillPersonDashFill, BsFillPersonPlusFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { followUser, unfollowUser } from "../../redux/actions/UserAction";
 import { Link } from "react-router-dom";
+import { Avatar } from "@mui/material";
 
-export const UserCard = ({ profile, username, userId, bio, worksAt }) => {
+export const UserCard = ({ profile, username, userId,  worksAt }) => {
   const user = useSelector((state) => state.authReducer.authData);
-  const [follow, setFollow] = useState(!user.following.includes(userId));
+  const [follow, setFollow] = useState(!user?.following?.includes(userId));
   const dispatch = useDispatch();
 
   const handleclickFollow = async () => {
@@ -23,17 +24,18 @@ export const UserCard = ({ profile, username, userId, bio, worksAt }) => {
   console.log(profile);
   return (
     <div className="user-card">
-      <img
-        src={process.env.REACT_APP_PUBLIC_FOLDER + profile}
-        alt="ravindra"
-      ></img>
+      <Avatar
+        src={profile}
+        alt={username}
+      ></Avatar>
       <div className="user-card-info">
         <Link to={`/profile/${userId}`}>
-          <h5>{username}</h5>
+          <h6>{username}</h6>
         </Link>
+        
+        <strong>{worksAt}</strong>
       </div>
-      <p>{bio}</p>
-      <strong>{worksAt}</strong>
+     
       {follow ? (
         <button onClick={handleclickFollow}>
           {" "}

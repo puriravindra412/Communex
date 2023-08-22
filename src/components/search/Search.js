@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useLocation } from "react-router-dom";
 
 import NavBar from "../navbar/navBar";
 import SideBar from "../sideBar/SideBar";
 import MobileSideBar from "../sideBar/MobileSideBar";
-import { UserCard } from "../user/UserCard";
+
 import "./search.css";
 import { Searchresult } from "./Searchresult";
 export const Search = () => {

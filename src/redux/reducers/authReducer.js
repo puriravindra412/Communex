@@ -63,6 +63,28 @@ const authReducer = (
         },
       };
 
+      case "SAVE_POST":
+      return {
+        ...state,
+        authData: {
+          ...state.authData,
+          savedPosts: [...state.authData.savedPosts, action.data],
+        },
+      };
+
+      case "UNSAVE_POST":
+      return {
+        ...state,
+        authData: {
+          ...state.authData,
+          savedPosts:  [
+            ...state.authData.savedPosts.filter(
+              (personId) => personId !== action.data,
+            ),
+          ],
+        },
+      };
+
     default:
       return state;
   }

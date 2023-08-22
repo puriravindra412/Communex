@@ -1,65 +1,70 @@
-import React, { useEffect } from "react";
-import { BsPersonPlusFill } from "react-icons/bs";
+import React from "react";
+import {  BsPersonPlusFill } from "react-icons/bs";
+import { FaCheck } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import * as CommunityApi from "../../api/CommunityRequests.js";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-export const TrendingTags = ({ img, name, peoples, posts }) => {
+import { Skeleton } from "@mui/material";
+const toastConfig = {
+  // Your toast configuration here
+  position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+};
+export const TrendingTags = ({ img, name, peoples, posts,loading }) => {
   const user = useSelector((state) => state.authReducer.authData);
+  console.log(peoples)
+  const addUser = (data) => {
+    
+    CommunityApi.addUserToCommunity(data)
+      .then((response) => {
+        console.log(response)
+        if (response.data === "user added ") {
+          toast.success("You have joined A Community Successfully", toastConfig);
+        } else {
+          toast.error("You have Already Joined this Community", toastConfig);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error("An error occurred while joining the community", toastConfig);
+      });
+  };
 
-  const addUser = () => {
+
+
+  // Example usage, call 'addUser' when a button is clicked
+  const handleJoinButtonClick = () => {
     const data = {
       name: name,
-      userId: user._id,
-      username: user.username,
-      profile: user.profilePicture,
-      bio: user.bio,
-      worksAt: user.worksAt,
+      userId:user._id,
+     
     };
-    addCommunity(data);
+    addUser(data);
   };
 
-  const addCommunity = async (data) => {
-    const res = await CommunityApi.addUserToCommunity(data);
-
-    if (res.data === "user added") {
-      toast.success("You have joined A Community Sucessfully", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-    } else {
-      toast.error("you have Already Joined this Community", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-    }
-  };
+  
 
   return (
     <div className="trending-tag-box-design">
-      <img src={process.env.REACT_APP_PUBLIC_FOLDER + img} alt={img} />
+    {loading?<Skeleton varient="rounded" height={40} width={40}  />:<img src={ img} alt={img} />}
+      
       <div>
-        <Link to={`/community/${name}`} state={[img, peoples, posts]}>
+      {loading?<Skeleton variant="text" width={100} sx={{fontSize:'20px',marginLeft:"5px"}} animation="wave" />:<Link to={`/community/${name}`} state={[img, peoples, posts]}>
           {" "}
           <h5>{name}</h5>
-        </Link>
-        <p>{peoples.length} people joined</p>
+        </Link>}
+        {loading?<Skeleton variant="text" width={50} sx={{fontSize:'10px',marginLeft:"5px"}} animation="wave" />: <p>{peoples.length} people joined</p>}
       </div>
-      <button className="trending-tag-box-design-button" onClick={addUser}>
-        <BsPersonPlusFill />
-      </button>
+      {loading?<Skeleton variant="circular" width={35} height={35} sx={{marginLeft:"5px"}} animation="wave" />:<button className="trending-tag-box-design-button" onClick={handleJoinButtonClick}>
+        {peoples.find(users=>users.userId===user._id)?<FaCheck color="green" />: <BsPersonPlusFill />}
+      </button>}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BiHomeAlt2 } from "react-icons/bi";
-import { HiHashtag, HiOutlineClipboardList } from "react-icons/hi";
+import { HiHashtag } from "react-icons/hi";
 import { CgCommunity } from "react-icons/cg";
 import { TiGroupOutline } from "react-icons/ti";
 

@@ -8,18 +8,20 @@
 
 .lightmode {
   --color: black;
-  --background-color: #fff;
+  --background-color: #f3f6f9;
   --border: 0.5px solid rgba(178, 176, 176, 0.518);
-  --div-background: rgb(241, 245, 249);
-  --outer-div-background: #ffffffe9;
-  height: 100vh;
+  --div-background: rgb(234, 242, 250);
+  --outer-div-background: #ffffff;
+  
   --button:#6ba6f7;
+  --date:rgb(164, 173, 182);
   --box-shadow: rgba(42, 40, 40, 0.111) 0px 15px 30px 4px;
   --background: url(https://img.freepik.com/free-vector/gradient-blur-pink-blue-abstract-background_53876-117324.jpg?w=826&t=st=1690543712~exp=1690544312~hmac=fee7e9acd54753bb8d0277717a53ed792ad690c4f2b802ff4cbc4f75b1e6820f);
 }
 .darkmode {
-  --button:#45494f;
+  --button: #8f63ee;
   --color: #fff;
+  --date:#797b7d;
   --background-color: #0f151b;
   --border: 0.5px solid rgba(165, 165, 165, 0.313);
   --div-background: #3c4146;
@@ -28,6 +30,13 @@
   --background: url(https://media.idownloadblog.com/wp-content/uploads/2020/07/iPad-gradient-wallpaper-idownloadblog-V4byArthur1992as-1472x1472.jpeg);
 }
 .app {
+}
+.loading-screen{
+  width:100%;
+  padding: 10px;
+  text-align: center;
+
+  margin: 200px 100px;
 }
 a {
   text-decoration: none;
@@ -80,11 +89,11 @@ button:hover {
   display: inline-flex;
   padding: 10px 0;
   z-index: 100;
-  background-color: var(--background-color);
+  background-color: var(--outer-div-background);
 }
 
 .logo {
-  height: 80%;
+  height: 100%;
   margin: 0 2% 0 2%;
   padding: 5px;
 }
@@ -95,13 +104,13 @@ button:hover {
   display: none;
 }
 .search-box {
-  margin: 10% 5rem;
+  margin:0 4rem 0 4rem;
   width: 43%;
   height: 5vh;
   display: inline-flex;
   border-radius: 30px;
   border: var(--border);
-  margin-top: 5px;
+ 
 
   box-shadow: var(--box-shadow);
 }
@@ -118,13 +127,13 @@ button:hover {
   margin-right: auto;
   margin-left: 10px;
   border: none;
-  background-color: var(--background-color);
+  background-color: transparent;
   font-size: 20px;
   color: var(--color);
 }
 .icon-wrapper {
   margin-left: auto;
-  padding: 10px;
+  padding: 0 10px;
   font-size: 25px;
 }
 .icon-menu {
@@ -154,41 +163,57 @@ button:hover {
   background: var(--background-color);
   width: 100%;
   display: grid;
-  grid-template-columns: 25% 50% 25%;
+  grid-template-columns: 20% 55% 20%;
+  column-gap: 10px;
   min-height: 100vh;
+}
+.sidebar-div{
+  width:100%;
+  
+  padding: 0;
 }
 
 .side-bar {
-  margin-top: 5rem;
-  height: 80vh;
+  background-color: var(--outer-div-background);
+  margin-top: 6rem;
+  min-height: 100vh;
   margin-left: 10px;
-  margin-right: 10px;
+  border-radius: 10px;
+  margin-right: auto;
   position: fixed;
+  width:18%;
+  
 }
 .mobile-sidebar {
   display: none;
 }
 .side-bar ul {
-  padding: 20px;
-
+  padding: 20px ;
+  
   font-weight: 500;
 }
 
 .side-bar > ul > li:hover {
   border-radius: 10px;
-  background-color: var(--outer-div-background);
+  background-color: var(--background-color);
 }
 .side-bar > ul > li {
   list-style-type: none;
   margin-top: 5px;
   font-size: 25px;
   height: 50px;
-  width: 200px;
+  width: 100%;
   padding: 5px;
+  display: flex;
+  flex-direction: column;
 }
 .side-bar > ul > li.active {
   border-radius: 10px;
-  background-color: var(--outer-div-background);
+  background-color: var(--button);
+  
+}
+.side-bar > ul > li.active .link-styling{
+  color: white;
 }
 .link-styling {
   text-decoration: none;
@@ -219,18 +244,35 @@ button:hover {
   color: var(--background-color);
 }
 .right-sidebar {
-  width: 100%;
-  margin: 5rem 10% 10% 1%;
-  padding: 15%;
+  right: 10px;
+ position:fixed;
+ min-height: 100vh;
+  margin: 6rem 0 0 10px;
+  padding: 0 10px ;
+ 
+  width: 23%;
 }
+.right-sidebar-community-box{
+  
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+  background-color: var(--outer-div-background);
+margin: 10px 5px;
 
-.right-sidebar ul {
-  margin: 5%;
+}
+.right-sidebar h4{
+  color:var(--button);
+  text-align: center;
+}
+.right-sidebar >ul {
+  margin: 10px;
   padding: 10px 10%;
   list-style-type: none;
+  
 }
 
-.right-sidebar li {
+.right-sidebar>ul> li {
   margin-bottom: 10px;
   font-size: 2vh;
   font-weight: 400;
@@ -253,13 +295,13 @@ button:hover {
 .trending-tag-box-design {
   display: flex;
   margin: 3% 10px 3% 0;
-  border: var(--border);
-  height: 50px;
-  background-color: rgb(241, 245, 249);
+  border: none;
+  height: 60px;
+  
   border-radius: 10px;
-  padding: 3% 4%;
+  padding: 10px;
   justify-content: space-between;
-  background-color: var(--div-background);
+  background-color: var(--background-color);
 }
 .trending-tag-box-design img {
   width: 30px;
@@ -319,7 +361,7 @@ button:hover {
 .card-container {
   
   margin-bottom: 10%;
-  border: var(--border);
+  
   border-radius: 15px;
   background-color: var(--outer-div-background);
 
@@ -418,24 +460,34 @@ button:hover {
   display: flex;
   flex-direction: row;
   line-height: 30px;
+  width:250px;
+  margin: 10px auto;
   
+  border-radius: 15px;
+  background-color: var(--background-color);
 }
 .post-like {
+  border: none;
+  border-right:var(--border);
+  width: 25%;
   font-size: 20px;
   background-color: transparent;
   color: var(--color);
-  border: none;
+  
   margin: 5px;
+  padding: 5px;
   display: flex;
+  
+}
+.post-like:last-of-type{
+  border-right:none;
 }
 .post-like > p {
   font-size: 15px;
   font-weight: 300;
   margin-left: 5px;
 }
-.post-like:last-of-type {
-  margin-left: auto;
-}
+
 .comment-list {
   
   padding: 5px;
@@ -451,7 +503,7 @@ button:hover {
   padding: 10px;
   margin: 10px;
   box-shadow: var(--box-shadow);
-  background-color: #388cf3;
+  background-color: var(--button);
   border: none;
   color: aliceblue;
 }
@@ -694,7 +746,7 @@ button:hover {
   }
   .mobile-sidebar >ul> li.active{
     border-radius: 30px;
-    background-color: #6ba6f7;
+    background-color: var(--button);
     text-align: start;
     width:38%;
     height: 4vh;

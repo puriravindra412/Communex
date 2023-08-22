@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import { useRef } from "react";
 import { addMessage, getMessages } from "../../api/MessageRequests";
 import { getUser } from "../../api/UserRequests";
 import "./ChatBox.css";
 import { format } from "timeago.js";
 import InputEmoji from "react-input-emoji";
+import { Avatar } from "@mui/material";
 
-const ChatBox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
+const ChatBox = memo(({ chat, currentUser, setSendMessage, receivedMessage }) => {
   const [userData, setUserData] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
 
-  const handleChange = (newMessage) => {
+  const handleChange = useCallback((newMessage) => {
     setNewMessage(newMessage);
-  };
+  },[]);
 
   // fetching data for header
   useEffect(() => {
@@ -87,14 +88,12 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
           <>
             {/* chat-header */}
             <div className="chat-header">
-              <img
+              <Avatar
                 src={
-                  userData?.profilePicture
-                    ? process.env.REACT_APP_PUBLIC_FOLDER +
-                      userData.profilePicture
-                    : process.env.REACT_APP_PUBLIC_FOLDER + "defaultProfile.png"
+                   userData?.profilePicture
+                   
                 }
-                alt="Profile"
+                alt={userData?.username}
               />
 
               <div className="chat-user-heading" style={{ fontSize: "0.9rem" }}>
@@ -125,7 +124,7 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
             {/* chat-sender */}
             <div className="chat-sender">
               <div onClick={() => imageRef.current.click()}>+</div>
-              <InputEmoji value={newMessage} onChange={handleChange} />
+              <InputEmoji value={newMessage} onChange={handleChange}  height={25}/>
               <div className="send-button button" onClick={handleSend}>
                 Send
               </div>
@@ -146,6 +145,6 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
       </div>
     </>
   );
-};
+});
 
 export default ChatBox;

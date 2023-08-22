@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import profile from "../../images/profile.jpg";
 import { useDispatch } from "react-redux";
 import { getUser } from "../../api/UserRequests";
 import "../../css/conversation.css";
- const Conversations = ({
+import { Avatar } from "@mui/material";
+ const Conversations = memo(({
   data,
   currentUser,
   online,
-  receivedMessage,
+  
 }) => {
   const [userData, setUserData] = useState(null);
   const dispatch = useDispatch();
@@ -25,20 +26,20 @@ import "../../css/conversation.css";
     };
 
     getUserData();
-  }, []);
+  },[] );
   console.log(userData);
   return (
     <div>
       {userData && (
         <div className="chat-user-card">
           {online && <div className="online-dot"></div>}
-          <img
+          <Avatar
             src={
-              userData?.profilePicture
-                ? process.env.REACT_APP_PUBLIC_FOLDER + userData.profilePicture
-                : profile
+              
+               userData.profilePicture
+                
             }
-            alt="Profile"
+            alt={userData?.usernam}
           />
           <div className="chat-user-information">
             <strong>{userData?.username}</strong>
@@ -48,6 +49,6 @@ import "../../css/conversation.css";
       )}
     </div>
   );
-};
+});
 
 export default Conversations;

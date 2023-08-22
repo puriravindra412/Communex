@@ -31,8 +31,13 @@ export const MobileMenu = ({ showMenu }) => {
               </Link>
             </li>
             <li>
-              <CiSaveDown1 className="icon" />
-              Saved Posts
+            {" "}
+              <Link to={`/my-reading/${user._id}`}>
+                {" "}
+                <CiSaveDown1 className="icon" />
+                Saved Posts
+              </Link>
+             
             </li>
             <li>
               <CiSettings className="icon" />
@@ -44,7 +49,7 @@ export const MobileMenu = ({ showMenu }) => {
             </li>
           </ul>
         ) : (
-          <ul className="hambergur-menu">
+          <ul >
             <li>
               {" "}
               <Link to="/login">

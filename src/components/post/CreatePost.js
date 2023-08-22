@@ -10,12 +10,38 @@ import * as CommunityApi from "../../api/CommunityRequests.js";
 import { uploadImage, uploadPost } from "../../redux/actions/UploadAction";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import MobileSideBar from "../sideBar/MobileSideBar";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+var toolbarOptions = [
+  ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+  ['blockquote', 'code-block'],
 
+  [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+  [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+  [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+  [{ 'direction': 'rtl' }],                         // text direction
+
+    // custom dropdown
+  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+  [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+  [{ 'font': [] }],
+  [{ 'align': [] }],
+
+  ['clean']                                         // remove formatting button
+];
+
+var 
+  modules={
+    toolbar: toolbarOptions,
+  }
 export const CreatePost = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [community, setCommunity] = useState([]);
   const user = useSelector((state) => state.authReducer.authData);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const communities = async () => {
       const communitData = await CommunityApi.getCommunity();
@@ -34,41 +60,54 @@ export const CreatePost = () => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
       setImage(img);
+      
     }
   };
-  const handleChange = (e, editor) => {
-    let data = editor.getData();
-    setDesc(data);
-  };
+  
 
   const onSubmit = (data) => {
-    //post data
+   
+    
     const newPost = {
       userId: user._id,
-      username: user.username,
+      
       desc: desc,
       heading: data.heading,
       hashtags: data.tags,
       community: data.community,
-      profilePicture: user.profilePicture,
+      
     };
 
     // if there is an image with post
     if (image) {
-      const data = new FormData();
-      const fileName = Date.now() + image.name;
-      data.append("name", fileName);
-      data.append("file", image);
-      newPost.BannerImage = fileName;
+      setLoading(true);
 
       try {
-        dispatch(uploadImage(data));
-      } catch (err) {
-        console.log(err);
+        const data = new FormData();
+        data.append("image", image);
+
+        // Dispatch the uploadImage action with the FormData
+        const uploadPromise =dispatch(uploadImage(data))
+        uploadPromise.then((response) => {
+            // Handle the successful response here
+            setLoading(false); // Set loading to false as the upload is complete
+            console.log("Upload successful:", response.data.url);
+            newPost.BannerImage=response.data.url;
+            dispatch(uploadPost(newPost, navigate));
+          
+          resetShare();
+          })
+          .catch((error) => {
+            // Handle any errors that occurred during the upload
+            setLoading(false); // Set loading to false as the upload is complete (even in case of an error)
+            console.error("Upload error:", error);
+            
+          });
+      } catch (error) {
+        alert(error.message);
       }
     }
-    dispatch(uploadPost(newPost, navigate));
-    resetShare();
+    
   };
 
   const resetShare = () => {
@@ -117,11 +156,7 @@ export const CreatePost = () => {
             )}
 
             <div className="text-editor">
-              <CKEditor
-                editor={ClassicEditor}
-                data={desc}
-                onChange={handleChange}
-              />
+            <ReactQuill modules={modules} theme="snow" value={desc} onChange={setDesc}  />
             </div>
 
             <input
@@ -140,7 +175,7 @@ export const CreatePost = () => {
             </select>
 
             <div style={{ display: "none" }}>
-              <input type="file" ref={imageRef} onChange={onImageChange} />
+              <input type="file" ref={imageRef} onChange={onImageChange} multiple={false} />
             </div>
           </div>
         </form>

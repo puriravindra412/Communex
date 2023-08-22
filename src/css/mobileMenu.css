@@ -5,7 +5,7 @@
 }
 
 .hambergur-menu-background {
-  background: var(--background);
+  background: var(--background-color);
   backdrop-filter: blur(100px);
   width: 100%;
   height: 100%;

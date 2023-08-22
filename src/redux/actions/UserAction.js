@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import * as UserApi from "../../api/UserRequests.js";
 
 export const updateUser = (id, formData) => async (dispatch) => {
@@ -20,3 +21,16 @@ export const unfollowUser = (id, data) => async (dispatch) => {
   dispatch({ type: "UNFOLLOW_USER", data: id });
   UserApi.unfollowUser(id, data);
 };
+
+export const savePostAction = (id, data) => async (dispatch) => {
+  dispatch({ type: "SAVE_POST", data: data._id});
+  const response=UserApi.savePost(id, data);
+ return response;
+};
+
+export const UnSavePostAction = (id, data) => async (dispatch) => {
+  dispatch({ type: "UNSAVE_POST", data:data._id });
+  const response= UserApi.savePost(id, data);
+  return response;
+};
+

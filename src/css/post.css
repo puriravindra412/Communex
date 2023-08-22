@@ -1,14 +1,15 @@
 @import "../App.css";
 @import url("https://fonts.googleapis.com/css2?family=Ysabeau+Infant:wght@300&display=swap");
  .ql-container {
-  min-height: 4em;
+  min-height: 5em;
   border-bottom-left-radius: 0.5em;
   border-bottom-right-radius: 0.5em;
-  background: #fefcfc;
+  background: var(--outer-div-background);
   scroll-behavior: smooth;
 }
 
  .ql-toolbar {
+  
   background: #dcdcdc;
   border-top-left-radius: 0.5em;
   border-top-right-radius: 0.5em;
@@ -76,15 +77,20 @@
 }
 .post-image-banner {
   height: 40vh;
-  width: 70%;
-  margin: 25px 0;
+  width: 100%;
+  margin: 15px 0;
 }
 .html-content {
   color: var(--color) !important;
   background-color: var(--background-color);
   padding: 20px;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  margin-bottom: 30px;
 }
-
+.html-content h1,h2,h3,h4,h5,h6{
+  color:var(--color) !important;
+}
 .html-content strong{
   color: var(--color) !important;
   background-color: var(--background-color);
@@ -97,6 +103,19 @@
   width: 100% !important;
   text-align: center !important;
 }
+.html-content blockquote {
+  max-width: 100% !important;
+  padding:20px;
+  color:var(--button);
+}
+
+.fix-like-comment-div{
+  position: fixed;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -90%);
+  background-color: var(--div-background);
+}
 
 .create-post-form {
   width: 100%;
@@ -108,6 +127,8 @@
 
 .text-editor {
   margin: 20px 10% !important;
+  color: var(--color);
+  background-color: var(--background-color);
 }
 .create-post-form input[name="heading"] {
   border: 2px dashed gainsboro;
@@ -173,35 +194,82 @@
 
 .container-top-new {
   align-items: center;
+  padding:5px;
 }
-.modelBox{
-  position: absolute;
-  top:50%;
-  left:50%;
-  transform: translate(-50%, -50%);
-  width:400px;
-  height: 60vh;
-  scroll-behavior: smooth;
-  overflow-y:scroll ;
-  background-color: var(--div-background);
-  border: none;
-  box-shadow: var(----box-shadow);
 
+/*new css for post */
+.post-outer-container{
+  padding:6rem 0 0 0 ;
+  min-width:100%;
+  min-height:100vh ;
+  display: flex;
+  flex-direction: column;
+ background-color: var(--div-background);
+
+}
+.post-inner-container{
+ margin: 0 auto auto auto;
+ 
+ width:60%;
+ min-height: 100vh;
+}
+
+.post-user-details-container{
+  width:100%;
+  height:4em;
+  
+  padding:10px;
+  display: flex;
+  position: relative;
+  
+  flex-direction: row;
+}
+.post-user-details-container div:last-of-type{
+margin-left: auto;
+margin-right: 10px;
+}
+.post-user-details-container button{
+  height: 40px;
+  width:100px;
+  color:white;
+  background-color: var(--button);
+  border: none;
+}
+
+.post-user-details-container-item{
+  margin:5px 10px;
+  display: flex;
+
+  flex-direction: column;
+}
+
+.post-user-details-container-item p{
+font-size: 12px;
+font-weight: 400;
+letter-spacing: 1px;
+color: var(--color);
+
+}
+.post-user-details-container-item p:last-of-type{
+  font-size: 10px;
+  font-weight: 300;
+  color:rgb(174, 174, 174);
 }
 
 @media only screen and (max-width: 450px) {
- 
-  .postbox {
+  .post-inner-container{
+    width:100%;
   }
+  
   .post-container-box {
     width: 100%;
     z-index: auto;
     height: auto;
-    padding: 100px 5px;
+    padding: 100px 0;
   }
   .post-container-box-layout {
-    width: 90%;
-    margin: 0 5%;
+    width: 100%;
+    
   }
   .post{
     width: 100%;
@@ -209,8 +277,9 @@
   }
   .post-image-banner {
     height: 20vh;
-    width: 92%;
-    margin: 10px;
+    width: 90%;
+    margin: 10px  5%;
+    
   }
   .create-post-form input[name="heading"] {
     width: 80%;

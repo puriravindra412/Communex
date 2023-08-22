@@ -1,34 +1,41 @@
-import React, { useEffect, useState } from "react";
-import { AiFillHeart, AiOutlineHeart, AiOutlineSend } from "react-icons/ai";
+import React, {  useState } from "react";
+import { AiFillHeart, AiOutlineHeart,  } from "react-icons/ai";
 import { IoIosMore} from "react-icons/io";
-
-
-
-import { GoCommentDiscussion } from "react-icons/go";
-
-import { CiSaveDown1 } from "react-icons/ci";
-
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import * as UserApi from '../../api/UserRequests.js'
 import { Link } from "react-router-dom";
-import { commentPost, likePost } from "../../api/PostsRequests";
-import { useForm } from "react-hook-form";
+import {  likePost } from "../../api/PostsRequests";
 import { IoShareOutline } from "react-icons/io5";
-import CommentEditor from "./CommentEditor";
-
-export const FeedCard = (data) => {
+import { Skeleton } from "@mui/material";
+import MuiDrawer from "./MuiDrawer";
+import {  MdOutlineBookmarkAdd, MdOutlineBookmarkAdded } from "react-icons/md";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { UnSavePost, UnSavePostAction, savePostAction } from "../../redux/actions/UserAction.js";
+export const FeedCard = ({data,loading}) => {
+  console.log(loading)
   const user = useSelector((state) => state.authReducer.authData);
-  const [liked, setLiked] = useState(data.data.likes.includes(user._id));
-  const [likes, setLikes] = useState(data.data.likes.length);
+  const [liked, setLiked] = useState(data?.post?.likes?.includes(user._id));
+  const [likes, setLikes] = useState(data?.post?.likes.length);
   const [more, setMore] = useState(false);
-  
-  const [commentsCount, setCommentsCount] = useState(data.data.comments.length);
+  const [commentsCount, setCommentsCount] = useState(data?.post?.comments?.length);
+  const [isSaved,setIsSaved]=useState(user.savedPosts.includes(data.post._id))
   const [comments, setComments] = useState(false);
- 
-  const handleLike = () => {
-    likePost(data.data._id, user._id);
+  const dispatch=useDispatch();
+  const handleLike = async() => {
+    const res=await likePost(data.post._id, user._id);
     setLiked((prev) => !prev);
     liked ? setLikes((prev) => prev - 1) : setLikes((prev) => prev + 1);
+    toast.success(res.data, {
+      position: "top-right",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   };
   const showComment = () => {
     comments ? setComments(false) : setComments(true);
@@ -39,99 +46,161 @@ export const FeedCard = (data) => {
     !more ? setMore(true) : setMore(false);
   };
 
-  let date = new Date(data.data.createdAt);
+  let date = new Date(data?.post?.createdAt);
   let newDate = date.toLocaleDateString("en-US");
 
+  const handleclickSavePost = () => {
+    const postPromise =dispatch(savePostAction(user._id,data.post));
+    
+    postPromise.then((response) => {
+       
+        console.log("Upload successful:", response.data);
+        toast.success(response.data, {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setIsSaved(prev=>!prev)
+     
+      })
+      .catch((error) => {
+        // Handle any errors that occurred during the upload
+       // Set loading to false as the upload is complete (even in case of an error)
+        console.error("error:", error);
+        
+      });
   
+  };
+
+  const handleclickUnSavePost = () => {
+    const postPromise = dispatch(UnSavePostAction(user._id,data.post ));
+    postPromise.then((response) => {
+       
+      console.log("Upload successful:", response.data);
+      toast.success(response.data, {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      setIsSaved(prev=>!prev)
+   
+    })
+    .catch((error) => {
+      // Handle any errors that occurred during the upload
+      // Set loading to false as the upload is complete (even in case of an error)
+      console.error("error:", error);
+      
+    });
+  };
+
+  const savePost=async()=>{
+      const res=await UserApi.savePost(user._id,data?.post?._id);
+      
+      liked ? setIsSaved(false) :setIsSaved(true);
+      
+    console.log(res)
+  };
 
   return (
     <div className="feed-container">
       <div className="top-feed-post">
+    {loading?<Skeleton variant="circular" width={40} height={40} />:
         <img
-          src={process.env.REACT_APP_PUBLIC_FOLDER + data.data.profilePicture}
+          src={data?.userDetails?.profilePicture}
           alt="profile"
           class="profile-post-image"
-        ></img>
-        <Link to={`/profile/${data.data.userId}`} className="user-name">
-          {data.data.username}
-        </Link>
+        ></img>}
 
-        <p className="time">{newDate}</p>
+        {loading?<Skeleton variant="text" width={100} sx={{fontSize:'13px',marginLeft:"5px"}} animation="wave" />:<Link to={`/profile/${data?.userDetails?._id}`} className="user-name">
+          {data?.userDetails?.username}
+        </Link>}
+
+        {loading?<Skeleton variant="text" width={50} sx={{fontSize:'8px',marginLeft:"5px"}} animation="wave" />:<p className="time">{newDate}</p>}
         <IoIosMore className="post-more" onClick={showMore} />
         {more && (
           <div className="post-more-option">
             <ul>
               <li>Edit</li>
-              {user._id === data.data.userId ? <li>delete post</li> : ""}
+              {user?._id === data?.userDetails?.userId ? <li>delete post</li> : ""}
             </ul>
           </div>
         )}
       </div>
 
       <div className="post-align-box">
+      {loading?<Skeleton variant="text" width={'80%'} sx={{fontSize:'25px',marginLeft:"5px"}} animation="wave" />:
         <Link
-          to={`/post/${data.data._id}`}
-          state={data.data}
+          to={`/post/${data?.post?._id}`}
+          
           className="heading"
         >
-          {data.data.heading}
-        </Link>
-        <Link to="/post" state={data.data}>
+          {data?.post?.heading}
+        </Link>}
+        {loading?
+          <div>
+          <Skeleton variant="text" width={'60%'} sx={{fontSize:'15px',marginLeft:"5px"}}  animation="wave"/>
+          <Skeleton variant="text" width={'70%'} sx={{fontSize:'15px',marginLeft:"5px"}} animation="wave"/>
+          <Skeleton variant="text" width={'60%'} sx={{fontSize:'15px',marginLeft:"5px"}} animation="wave"/>
+          <Skeleton variant="text" width={'70%'} sx={{fontSize:'15px',marginLeft:"5px"}} animation="wave"/>
+          </div>:
+        <Link to={`/post/${data?.post?._id}`} >
           <p
             className="subtitle"
             dangerouslySetInnerHTML={{
               __html:
-                data.data.desc.substring(0, 400) +
+                data?.post?.desc?.substring(0, 250) +
                 "<strong>....Read More</strong>",
             }}
           ></p>
-        </Link>
+        </Link>}
+        {loading?<Skeleton variant="rounded" width={'80%'} height={150} sx={{margin:"10px"}} animation="wave"/>:
         <img
           src={
-            data.data.BannerImage
-              ? process.env.REACT_APP_PUBLIC_FOLDER + data.data.BannerImage
+            data?.post?.BannerImage
+              ? data?.post?.BannerImage
               : ""
           }
           alt="profile"
           className="post-image"
-        ></img>
+        ></img>}
 
-        <p className="subtitle">{data.data.hashtags}</p>
-        <div className="like-comment-box">
-          <button className="post-like" onClick={handleLike}>
-            {liked ? <AiFillHeart style={{color:'red'}}/> : <AiOutlineHeart />}
-            <p>{likes}</p>
-          </button>
-          <button className="post-like" onClick={showComment}>
-            <GoCommentDiscussion />
-            <p>{commentsCount}</p>
-          </button>
-          <button className="post-like">
-            <IoShareOutline />
-          </button>
-          <button className="post-like">
-            <CiSaveDown1 className="save" />
-          </button>
-        </div>
+        {loading
+          ? <Skeleton variant="text" width={'60%'} sx={{fontSize:'10px',marginLeft:"5px"}} animation="wave" />
+        : <p className="subtitle">{data?.post?.hashtags}</p>}
+       
 
-        {comments ? (
-          <div className="comment-list">
-            <ul>
-              {data.data.comments.slice(0, 3).map((item, id) => {
-                return (
-                  <li key={id}>
-                    <span>{item.username}</span>
-                    {item.comment}
-                  </li>
-                );
-              })}
-            </ul>
-            <CommentEditor data={data} user={user} commentsCount={commentsCount}  setCommentsCount={setCommentsCount} />
-</div>
-        ) : (
-          ""
-        )}
-      </div>
+       </div>
+       {loading
+        ? <Skeleton variant="text" width={250} sx={{fontSize:'15px',marginLeft:"5px"}} animation="wave" />:
+      <div className="like-comment-box">
+        <button className="post-like" onClick={handleLike}>
+          {liked ? <AiFillHeart style={{color:'red'}}/> : <AiOutlineHeart />}
+          <p>{likes}</p>
+        </button>
+        <button className="post-like" onClick={showComment}>
+        <MuiDrawer  className="post-like" data={data}  commentsCount={commentsCount}  setCommentsCount={setCommentsCount}></MuiDrawer>
+          <p>{commentsCount}</p>
+        </button>
+        <button className="post-like">
+          <IoShareOutline />
+        </button>
+       
+        <button className="post-like" >
+        {isSaved
+          ? <MdOutlineBookmarkAdded  color="green" onClick={handleclickUnSavePost} />: <MdOutlineBookmarkAdd  onClick={handleclickSavePost}/>}
+        </button>
+        
+      </div>}
     </div>
   );
 };

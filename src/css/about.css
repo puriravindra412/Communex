@@ -19,7 +19,7 @@
 }
 .highlighted-text {
   background: linear-gradient(to right bottom, #3078d0, #7011e4);
-  -webkit-background-clip: text;
+  
   -webkit-text-fill-color: transparent;
 }
 .social-community-img {

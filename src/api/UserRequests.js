@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = axios.create({ baseURL: "https://communexbackend.onrender.com" });
+const API = axios.create({ baseURL: "http://localhost:5000/" });
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("profile")) {
@@ -13,6 +13,7 @@ API.interceptors.request.use((req) => {
 });
 
 export const getUser = (userId) => API.get(`/user/${userId}`);
+export const savePost = (id,data) => API.put(`/user/${id}/savePost`,data);
 export const updateUser = (id, formData) => API.put(`/user/${id}`, formData);
 export const getAllUser = () => API.get("/user");
 export const followUser = (id, data) => API.put(`/user/${id}/follow`, data);

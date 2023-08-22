@@ -9,6 +9,7 @@ import { HiViewGrid } from "react-icons/hi";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getTimelinePosts } from "../../redux/actions/PostsAction.js";
+import { Skeleton } from "@mui/material";
 
 export default function Feed(props) {
   const params = useParams();
@@ -21,12 +22,16 @@ export default function Feed(props) {
   }, []);
   if (!posts) return "No Posts";
   if (params.id) posts = posts.filter((post) => post.userId === params.id);
+  console.log(posts)
 
   return (
     <div>
+
       <div className="card-container">
+
         <div className="container-top">
-          <button className="container-top-button">
+        {loading?<Skeleton variant="text" width={"100%"}/>:
+          <><button className="container-top-button">
             <MdAutorenew /> New
           </button>
           <button className="container-top-button">
@@ -34,10 +39,10 @@ export default function Feed(props) {
           </button>
           <button className="container-top-button">
             <HiViewGrid /> view
-          </button>
+          </button></>}
         </div>
         {posts.map((post, id) => {
-          return <FeedCard data={post} key={id} />;
+          return <FeedCard data={post} key={id} loading={loading}/>;
         })}
       </div>
     </div>

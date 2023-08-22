@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Ysabeau+Office:wght@500&display=swap');
+.blog-container{
+    padding:10px;
+}
+.blog-container h4{
+    text-align: center;
+    padding:10px 0px;
+}
+
+.blog-heading{
+    font-family: 'Ysabeau Office', sans-serif;
+    font-size: 15px;
+}
+.timeline-date{
+    opacity:1;
+   
+    color: var(--date);
+    
+}

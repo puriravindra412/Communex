@@ -26,7 +26,7 @@ export const GetCommunityPost = () => {
       setCommunity(communitData.data);
     };
     communities();
-  }, []);
+  }, [name]);
 
   const user = useSelector((state) => state.authReducer.authData);
 
@@ -34,8 +34,7 @@ export const GetCommunityPost = () => {
     const data = {
       name: name,
       userId: user._id,
-      username: user.username,
-      profile: user.profilePicture,
+      
     };
     addCommunity(data);
   };
@@ -43,7 +42,7 @@ export const GetCommunityPost = () => {
     const { res } = await CommunityApi.addUserToCommunity(data);
     alert(res);
   };
-
+  console.log("inside get community " ,Community)
   const [activeCategory, setActiveCategory] = useState("user");
 
   const handleCategoryChange = (category) => {
@@ -55,49 +54,46 @@ export const GetCommunityPost = () => {
   return (
     <div className="profile-page-container">
       <NavBar />
-      <div className="profile-container-box">
+      <div className="community-container-box ">
         <SideBar />
         <MobileSideBar />
         <div className="profile-main">
           <div className="commuinty-feed-container">
+        <div className="community-intro-box">
             <div className="community-heading">
-              <img
-                src={process.env.REACT_APP_PUBLIC_FOLDER + img}
+            <div>
+            <img
+                src={img}
                 alt={"community"}
                 className="community-logo"
               ></img>
             </div>
+              
+            
             <div className="about-community">
               <div className="about-community-item">
                 <div>
-                  <h6>Follow</h6>
-                  <p>People joined {peoples.length}</p>
+                  <h6>People joined</h6>
+                  <p> {peoples.length}</p>
                 </div>
-                <button onClick={addUser}>
-                  <BsFillPersonPlusFill />
-                </button>
+                
               </div>
               <div className="about-community-item">
                 <div>
                   <h6>Posted Artical</h6>
-                  <p>{peoples.length}</p>
+                  <p>{Community.length}</p>
                 </div>
               </div>
             </div>
-            <h2>Welcome To the {name} Community</h2>
-            <p className="community-intro">
-              Welcome to {name}, the ultimate destination for {name}{" "}
-              enthusiasts! We're excited to have you join our vibrant community
-              of bloggers and readers. Whether you're here to share your
-              knowledge or to learn something new, we hope you find our platform
-              to be engaging and user-friendly. Feel free to browse our blog
-              posts, leave comments, and connect with other like-minded
-              individuals. Happy blogging!
-            </p>
-
-            <div>
-              
-              <div className="card-container">
+          </div>
+            <button onClick={addUser}>
+                  Join Community <BsFillPersonPlusFill size={15}/>
+                </button>
+            
+            
+            </div>
+            <div className="community-post-container">
+             <div className="card-container ">
                 <div className="container-top">
                   <div className="buttons-container">
                     <div>
@@ -119,18 +115,18 @@ export const GetCommunityPost = () => {
                 </div>
 
                 {activeCategory === "post" &&
-                  Community.map((post, id) => {
+                  Community?.result?.post.map((post, id) => {
                     return <FeedCard data={post} key={id} />;
                   })}
                 {activeCategory === "user" && (
                   <div className="community-users">
-                    {users.map((people, index) => {
+                    {Community?.result?.usersData.filter((people)=>{return people._id !== user._id}).map((people, index) => {
                       return (
                         <UserCard
                           username={people.username}
-                          profile={people.profile}
-                          userId={people.userId}
-                          bio={people.bio}
+                          profile={people.profilePicture}
+                          userId={people._id}
+                          
                           worksAt={people.worksAt}
                           key={index}
                         />
@@ -145,4 +141,4 @@ export const GetCommunityPost = () => {
       </div>
     </div>
   );
-};
+                  };

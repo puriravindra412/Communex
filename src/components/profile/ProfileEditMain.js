@@ -44,41 +44,66 @@ export const ProfileEditMain = (data) => {
       setCoverImage(img);
     }
   };
-  const coverImageUpload = async (UserData) => {
-    const data = new FormData();
-    const fileName = Date.now() + coverImage.name;
-    data.append("name", fileName);
-    data.append("file", coverImage);
-    UserData.coverPicture = fileName;
-    try {
-      await dispatch(uploadImage(data));
-    } catch (err) {
-      console.log(err);
-    }
-    return UserData;
-  };
+
   const onSubmit = (data) => {
     let UserData = data;
     UserData._id = id;
     UserData.isAdmin = admin;
 
     if (image) {
-      const data = new FormData();
-      const fileName = Date.now() + image.name;
-      data.append("name", fileName);
-      data.append("file", image);
-      UserData.profilePicture = fileName;
       try {
-        dispatch(uploadImage(data));
-      } catch (err) {
-        console.log(err);
+        const data = new FormData();
+        data.append("image", image);
+
+        // Dispatch the uploadImage action with the FormData
+        const uploadPromise =dispatch(uploadImage(data))
+        uploadPromise.then((response) => {
+            // Handle the successful response here
+             // Set loading to false as the upload is complete
+            console.log("Upload successful:", response.data.url);
+            UserData.profilePicture=response.data.url;
+            dispatch(updateUser(param.id, UserData));
+    setUserProfile(UserData);
+          
+          
+          })
+          .catch((error) => {
+            // Handle any errors that occurred during the upload
+             // Set loading to false as the upload is complete (even in case of an error)
+            console.error("Upload error:", error);
+            
+          });
+      } catch (error) {
+        alert(error.message);
       }
     }
     if (coverImage) {
-      coverImageUpload(UserData);
-    }
-    dispatch(updateUser(param.id, UserData));
-    setUserProfile(UserData);
+      try {
+        const data = new FormData();
+        data.append("image", coverImage);
+
+        // Dispatch the uploadImage action with the FormData
+        const uploadPromise =dispatch(uploadImage(data))
+        uploadPromise.then((response) => {
+            // Handle the successful response here
+             // Set loading to false as the upload is complete
+            console.log("Upload successful:", response.data.url);
+            UserData.coverPicture=response.data.url;
+            dispatch(updateUser(param.id, UserData));
+            setUserProfile(UserData);
+          
+          })
+          .catch((error) => {
+            // Handle any errors that occurred during the upload
+             // Set loading to false as the upload is complete (even in case of an error)
+            console.error("Upload error:", error);
+            
+          });
+        }catch (error) {
+          alert(error.message);
+        }
+       }
+    
   };
   console.log(userProfile);
   return (
@@ -91,7 +116,7 @@ export const ProfileEditMain = (data) => {
           ) : (
             <img
               src={
-                process.env.REACT_APP_PUBLIC_FOLDER + userProfile.profilePicture
+                 userProfile.profilePicture
               }
               alt="profile-img"
             ></img>
@@ -106,7 +131,7 @@ export const ProfileEditMain = (data) => {
           ) : (
             <img
               src={
-                process.env.REACT_APP_PUBLIC_FOLDER + userProfile.coverPicture
+                 userProfile.coverPicture
               }
               alt="profile-img"
             ></img>

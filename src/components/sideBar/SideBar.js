@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { BsRobot } from "react-icons/bs";
 import { BiHomeAlt2 } from "react-icons/bi";

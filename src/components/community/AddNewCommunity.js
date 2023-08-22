@@ -11,6 +11,7 @@ const AddNewCommunity = () => {
   const imageRef = useRef();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.authReducer.authData);
+  const [loading, setLoading] = useState(false);
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
@@ -24,18 +25,32 @@ const AddNewCommunity = () => {
     };
 
     if (image) {
-      const data = new FormData();
-      const fileName = Date.now() + image.name;
-      data.append("name", fileName);
-      data.append("file", image);
-      newCommunity.image = fileName;
-      try {
-        dispatch(uploadImage(data));
-      } catch (err) {
-        console.log(err);
+      
+  
+        try {
+          const data = new FormData();
+          data.append("image", image);
+  
+          // Dispatch the uploadImage action with the FormData
+          const uploadPromise =dispatch(uploadImage(data))
+          uploadPromise.then((response) => {
+              // Handle the successful response here
+              setLoading(false); // Set loading to false as the upload is complete
+              console.log("Upload successful:", response.data.url);
+              newCommunity.image=response.data.url;
+              create(newCommunity);
+            })
+            .catch((error) => {
+              // Handle any errors that occurred during the upload
+              setLoading(false); // Set loading to false as the upload is complete (even in case of an error)
+              console.error("Upload error:", error);
+              
+            });
+        } catch (error) {
+          alert(error.message);
+        }
       }
-    }
-    create(newCommunity);
+    
   };
 
   const create = async (formData) => {

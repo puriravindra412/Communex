@@ -1,11 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 
 import "./Chat.css";
 import { useEffect } from "react";
 import { userChats } from "../../api/ChatRequests";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { io } from "socket.io-client";
-import  Conversations  from "./Conversations";
+import Conversations from "./Conversations";
 import { MdArrowBack } from "react-icons/md";
 import ChatBox from "./ChatBox";
 
@@ -20,19 +20,43 @@ const Chat = () => {
   const [currentChat, setCurrentChat] = useState(null);
   const [sendMessage, setSendMessage] = useState(null);
   const [receivedMessage, setReceivedMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   // Get the chat in chat section
-  useEffect(() => {
-    const getChats = async () => {
-      try {
-        const { data } = await userChats(user._id);
-        setChats(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getChats();
+  const fetchChats = useCallback(async () => {
+    try {
+      const { data } = await userChats(user._id);
+      return data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   }, [user._id]);
+
+  // Effect to fetch data on mount and when user ID changes
+  useEffect(() => {
+    let isCancelled = false;
+    setIsLoading(true);
+
+    fetchChats()
+      .then((data) => {
+        if (!isCancelled) {
+          setChats(data);
+          setIsLoading(false);
+        }
+      })
+      .catch((error) => {
+        if (!isCancelled) {
+          setError(error.message);
+          setIsLoading(false);
+        }
+      });
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [fetchChats]);
 
   // Connect to Socket.io
   useEffect(() => {
@@ -41,7 +65,7 @@ const Chat = () => {
     socket.current.on("get-users", (users) => {
       setOnlineUsers(users);
     });
-  }, [user]);
+  }, [user._id]);
 
   // Send Message to socket server
   useEffect(() => {
@@ -53,7 +77,7 @@ const Chat = () => {
   // Get the message from socket server
   useEffect(() => {
     socket.current.on("recieve-message", (data) => {
-      console.log(data);
+      
       setReceivedMessage(data);
     });
   }, []);
