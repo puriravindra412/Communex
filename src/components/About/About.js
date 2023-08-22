@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import NavBar from "../navbar/navBar";
 import "../../css/about.css";
 import social from "../../images/socialCommunity.png";
-import ravindra from "../../images/ravindra.JPG";
+import ravindra from "../../images/ravindra.jpg";
 import rohit from "../../images/rohit.jpg";
 import sumit from "../../images/sumit.jpg";
 import { BsInstagram, BsLinkedin, BsGithub } from "react-icons/bs";
