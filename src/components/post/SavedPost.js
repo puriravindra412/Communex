@@ -16,7 +16,6 @@ const SavedPost = () => {
     const [value, setValue] =useState('1');
     const [posts,setPosts]=useState(null);
     const [loading,setLoading]=useState(true)
-    console.log(id)
     const getSavedPostData=useCallback(async()=>{
         setLoading(true)
         const res=await UserApi.getSavedPosts(id)
