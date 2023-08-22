@@ -2,19 +2,18 @@ import React, { useCallback, useEffect, useState } from "react";
 import NavBar from "../navbar/navBar";
 import { AiFillHeart, AiOutlineHeart, AiOutlineSend } from "react-icons/ai";
 import * as PostApi from "../../api/PostsRequests.js";
-import * as UserApi from '../../api/UserRequests.js'
+
 
 import { IoShareOutline } from "react-icons/io5";
 
 
 
-import { CiSaveDown1 } from "react-icons/ci";
 
 import "../../css/post.css";
 import {  useParams } from "react-router-dom";
 import { useDispatch,useSelector } from "react-redux";
 import {  likePost } from "../../api/PostsRequests";
-import { async } from "react-input-emoji";
+
 import MuiDrawer from "../home/MuiDrawer";
 import { Avatar } from "@mui/material";
 import { format } from "timeago.js";
@@ -25,7 +24,7 @@ import { MdOutlineBookmarkAdd, MdOutlineBookmarkAdded } from "react-icons/md";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Troubleshoot } from "@mui/icons-material";
+
  const Post = () => {
   const  {id } = useParams();
   const postId=id;
