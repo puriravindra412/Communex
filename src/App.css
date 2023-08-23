@@ -711,9 +711,9 @@ margin: 10px 5px;
     display: flex;
 
     bottom: 0;
-    height: 6vh;
+    height: 8vh;
     width: 100%;
-    padding: 5px;
+    padding: 10px;
     position: fixed;
     background-color: #3c4146;
   }
@@ -724,13 +724,15 @@ margin: 10px 5px;
     width: 100%;
     height: 100%;
     flex-wrap: wrap;
+    justify-content: space-around;
   }
   .mobile-sidebar >ul> li {
     height: 4vh;
     align-items: center;
     text-align: center;
     width:15%;
-    padding: 1%;
+    padding: 5px;
+    
   }
   .mobile-sidebar >ul> li a {
     display: inline-flex;
@@ -745,11 +747,11 @@ margin: 10px 5px;
     
   }
   .mobile-sidebar >ul> li.active{
-    border-radius: 30px;
+    border-radius: 10px;
     background-color: var(--button);
     text-align: start;
-    width:38%;
-    height: 4vh;
+    width:max-content;
+    height: 5vh;
 
    
   }
