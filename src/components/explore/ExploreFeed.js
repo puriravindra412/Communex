@@ -80,6 +80,7 @@ export const ExploreFeed = () => {
 
   return (
     <div>
+    
       <div className="trending-tag">
         <h2>Trending Tags</h2>
         <div className="trending-tags-grid">
@@ -100,14 +101,14 @@ export const ExploreFeed = () => {
       <div>
         <div className="card-container">
           
-            <Box sx={{ width: '100%', typography: 'body1' }}>
+            <Box sx={{ width: '100%', typography: 'body1'}}>
             <TabContext value={value} >
-              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <TabList onChange={handleChange} aria-label="lab API tabs example" centered >
-                  <Tab label="Trending" value="1" sx={{color:"var(--color)"}}/>
-                  <Tab label="Recent" value="2" sx={{color:"var(--color)"}}/>
-                  <Tab label="Blogs" value="3"  sx={{color:"var(--color)"}}/>
-                  <Tab label="Recent Users" value="4"  sx={{color:"var(--color)"}}/>
+              <Box sx={{ borderBottom: 1, borderColor: 'divider',overflowX:'hidden' }}>
+                <TabList onChange={handleChange} aria-label="lab API tabs example"  centered  >
+                  <Tab label="Trending" value="1" sx={{color:"var(--color)",fontSize:"10px"}}/>
+                  <Tab label="Recent" value="2" sx={{color:"var(--color)",fontSize:"10px"}}/>
+                  <Tab label="Blogs" value="3"  sx={{color:"var(--color)",fontSize:"10px"}}/>
+                  <Tab label="Recent Users" value="4"  sx={{color:"var(--color)",fontSize:"10px"}}/>
                 </TabList>
               </Box>
             <TabPanel  sx={{padding:0}} value="1">
