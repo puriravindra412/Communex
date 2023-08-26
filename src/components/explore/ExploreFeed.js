@@ -34,20 +34,7 @@ export const ExploreFeed = () => {
       const recentUserData = await CommunityApi.getRecentUser();
       setPosts(response.data);
       setRecentUser(recentUserData.data)
-      setTrandingPost(response.data.sort((a, b) => {
-        const aLikes = a.likes.length;
-        const bLikes = b.likes.length;
-
-        const aComments = a.comments.length;
-        const bComments = b.comments.length;
-
-        // Sort by likes in descending order
-        if (aLikes !== bLikes) {
-            return bLikes - aLikes;
-        }
-        // If the number of likes is the same, sort by comments in descending order
-        return bComments - aComments;
-    }))
+     
       setLoading(false);
     } catch (error) {
       console.error("Error fetching recent posts:", error);
@@ -66,9 +53,21 @@ export const ExploreFeed = () => {
     }
   }, []);
 
+  const getTrendingPosts = useCallback(async () => {
+    try {
+      const res = await PostApi.getTrendingPost() ;
+      setTrandingPost(res.data)
+      
+    } catch (error) {
+      console.error("Error fetching community data:", error);
+     
+    }
+  }, []);
+
   useEffect(() => {
     getRecentPosts();
     getCommunityData();
+    getTrendingPosts()
   }, [getRecentPosts, getCommunityData]);
   console.log(posts);
   
@@ -104,7 +103,7 @@ export const ExploreFeed = () => {
             <Box sx={{ width: '100%', typography: 'body1' }}>
             <TabContext value={value} >
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <TabList onChange={handleChange} aria-label="lab API tabs example" >
+                <TabList onChange={handleChange} aria-label="lab API tabs example" centered >
                   <Tab label="Trending" value="1" sx={{color:"var(--color)"}}/>
                   <Tab label="Recent" value="2" sx={{color:"var(--color)"}}/>
                   <Tab label="Blogs" value="3"  sx={{color:"var(--color)"}}/>
@@ -137,7 +136,7 @@ export const ExploreFeed = () => {
               {loading?<CircularProgress sx={{margin:"30px 45%"}} /> :
                <div className="category-content">
                 <div className="community-users">
-                {recentUser.filter((people)=>{return people._id !== user._id}).map((people, index) => {
+                {recentUser.filter((people)=>{return people._id !== user?._id}).map((people, index) => {
                   return (
                     
                       

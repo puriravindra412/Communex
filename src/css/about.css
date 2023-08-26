@@ -90,6 +90,12 @@
   padding: 5px;
   border-radius: 7px;
 }
+.team-social-button:hover{
+  color:var(--button);
+  border:0.5px solid var(--button);
+  
+}
+
 @media only screen and (max-width: 450px) {
   .team-container {
     margin-top: 40px;

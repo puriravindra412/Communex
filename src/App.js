@@ -35,7 +35,7 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={user ? <Navigate to="home" /> : <Navigate to="login" />}
+          element={user ? <Navigate to="home" /> : <Navigate to="explore" />}
         />
         <Route
           path="/home"
@@ -53,12 +53,12 @@ function App() {
         <Route
           exact
           path="/explore"
-          element={user ? <Explore /> : <Navigate to="../login" />}
+          element={ <Explore />}
         />
         <Route
           exact
           path="/community"
-          element={user ? <Community /> : <Navigate to="../login" />}
+          element={<Community />}
         />
         <Route
           exact
@@ -71,7 +71,7 @@ function App() {
         />
         <Route
         path="/my-reading/:id"
-        element={<SavedPost />}
+        element={user ?<SavedPost />: <Navigate to="../login" />}
       />
         <Route
           path="/chat"
@@ -87,19 +87,19 @@ function App() {
         />
         <Route
           path="/about"
-          element={user ? <About /> : <Navigate to="../login" />}
+          element={ <About /> }
         />
         <Route
           path="/CommuVerse"
-          element={user ? <ChatBoat /> : <Navigate to="../login" />}
+          element={ <ChatBoat /> }
         />
         <Route
           path="/Community/:name"
-          element={user ? <GetCommunityPost /> : <Navigate to="../login" />}
+          element={ <GetCommunityPost />  }
         />
         <Route
           path="/profile/:id"
-          element={user ? <Profile /> : <Navigate to="../login" />}
+          element={ <Profile />  }
         />
         <Route
           path="/editProfile/:id"

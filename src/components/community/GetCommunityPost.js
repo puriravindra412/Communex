@@ -40,7 +40,7 @@ export const GetCommunityPost = () => {
   const addUser = () => {
     const data = {
       name: name,
-      userId: user._id,
+      userId: user?._id,
       
     };
     addCommunity(data);
@@ -56,7 +56,7 @@ export const GetCommunityPost = () => {
     setValue(newValue);
   };
   const users = peoples.filter((people) => {
-    return people.userId !== user._id;
+    return people.userId !== user?._id;
   });
   return (
     <div className="profile-page-container">
@@ -106,7 +106,7 @@ export const GetCommunityPost = () => {
             <Box sx={{ width: '100%', typography: 'body1' }}>
             <TabContext value={value} >
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <TabList onChange={handleChange} aria-label="lab API tabs example" >
+                <TabList onChange={handleChange} aria-label="lab API tabs example" centered>
                   <Tab label="Posts" value="1" sx={{color:"var(--color)"}}/>
                   <Tab label="Users" value="2" sx={{color:"var(--color)"}}/>
                   
@@ -123,7 +123,7 @@ export const GetCommunityPost = () => {
             <TabPanel  sx={{padding:0}} value="2">
               {loading?<CircularProgress sx={{margin:"30px 45%"}} /> : <div className="category-content">
               <div className="community-users">
-              {Community?.result?.usersData.filter((people)=>{return people._id !== user._id}).map((people, index) => {
+              {Community?.result?.usersData.filter((people)=>{return people._id !== user?._id}).map((people, index) => {
                 return (
                   <UserCard
                     username={people.username}

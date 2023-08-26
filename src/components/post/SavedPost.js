@@ -38,7 +38,7 @@ const SavedPost = () => {
       <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={value} >
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList onChange={handleChange} aria-label="lab API tabs example" >
+          <TabList onChange={handleChange} aria-label="lab API tabs example"  centered>
             <Tab label="My Reading" value="1" sx={{color:"var(--color)"}}/>
             <Tab label="My BookList" value="2" sx={{color:"var(--color)"}}/>
             

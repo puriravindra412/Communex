@@ -45,16 +45,16 @@
   width: 100%;
   z-index: auto;
   height: auto;
-  padding: 20px;
+  
   display: grid;
-  grid-template-columns: 25% 75%;
+  grid-template-columns: 20% 80%;
   color: var(--color);
   background-color: var(--background-color);
 }
 .commuinty-feed-container {
   width: 100%;
   display:grid;
-  grid-template-columns: 65% 30%;
+  grid-template-columns: 70% 25%;
   column-gap: 20px;
   
 }
@@ -122,7 +122,22 @@
   text-align: center;
 }
 
-
+.community-button-icon{
+  width: 50%;
+  height: 50px;
+  border-radius: 10px;
+  
+  align-items: center;
+  text-align: center;
+  margin:20px  25% ;
+  border: none;
+  color: white;
+ 
+  background-color: var(--button);
+  font-size:15px ;
+  letter-spacing: 1px;
+  font-weight: 400;
+}
 .community-logo {
   width: 50px;
   height: 50px;
@@ -221,7 +236,12 @@
   .create-community-form {
     align-items: start;
   }
-  
+  .community-button-icon{
+    width:90%;
+    margin: 20px;
+  }
+
+
   .create-community-form input {
     width: 300px;
   }

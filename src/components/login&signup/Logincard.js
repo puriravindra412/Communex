@@ -26,7 +26,7 @@ export const Logincard = () => {
           required
         ></input>
         <input
-          type="text"
+          type="password"
           placeholder="Password"
           name="password"
           {...register("password")}

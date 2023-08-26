@@ -3,7 +3,7 @@ import { AiFillHeart, AiOutlineHeart,  } from "react-icons/ai";
 import { IoIosMore} from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import * as UserApi from '../../api/UserRequests.js'
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import {  likePost } from "../../api/PostsRequests";
 import { IoShareOutline } from "react-icons/io5";
 import { Skeleton } from "@mui/material";
@@ -15,29 +15,37 @@ import { UnSavePost, UnSavePostAction, savePostAction } from "../../redux/action
 export const FeedCard = ({data,loading}) => {
   console.log(loading)
   const user = useSelector((state) => state.authReducer.authData);
-  const [liked, setLiked] = useState(data?.post?.likes?.includes(user._id));
+  const [liked, setLiked] = useState(data?.post?.likes?.includes(user?._id));
   const [likes, setLikes] = useState(data?.post?.likes.length);
   const [more, setMore] = useState(false);
   const [commentsCount, setCommentsCount] = useState(data?.post?.comments?.length);
-  const [isSaved,setIsSaved]=useState(user.savedPosts.includes(data.post._id))
+  const [isSaved,setIsSaved]=useState(user?.savedPosts?.includes(data.post._id))
   const [comments, setComments] = useState(false);
   const dispatch=useDispatch();
+  const navigate = useNavigate();
   const handleLike = async() => {
-    const res=await likePost(data.post._id, user._id);
-    setLiked((prev) => !prev);
-    liked ? setLikes((prev) => prev - 1) : setLikes((prev) => prev + 1);
-    toast.success(res.data, {
-      position: "top-right",
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: false,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
+    if(user){
+      const res=await likePost(data.post._id, user?._id);
+      setLiked((prev) => !prev);
+      liked ? setLikes((prev) => prev - 1) : setLikes((prev) => prev + 1);
+      toast.success(res.data, {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      
+    }else{
+      navigate("../login", { replace: true });
+    }
+    
   };
   const showComment = () => {
+    
     comments ? setComments(false) : setComments(true);
   };
  
@@ -50,35 +58,42 @@ export const FeedCard = ({data,loading}) => {
   let newDate = date.toLocaleDateString("en-US");
 
   const handleclickSavePost = () => {
-    const postPromise =dispatch(savePostAction(user._id,data.post));
+    if(user){
+      const postPromise =dispatch(savePostAction(user?._id,data.post));
     
-    postPromise.then((response) => {
+      postPromise.then((response) => {
+         
+          console.log("Upload successful:", response.data);
+          toast.success(response.data, {
+            position: "top-right",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          setIsSaved(prev=>!prev)
        
-        console.log("Upload successful:", response.data);
-        toast.success(response.data, {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
+        })
+        .catch((error) => {
+          // Handle any errors that occurred during the upload
+         // Set loading to false as the upload is complete (even in case of an error)
+          console.error("error:", error);
+          
         });
-        setIsSaved(prev=>!prev)
-     
-      })
-      .catch((error) => {
-        // Handle any errors that occurred during the upload
-       // Set loading to false as the upload is complete (even in case of an error)
-        console.error("error:", error);
-        
-      });
-  
+    
+    }
+    else{
+      navigate("../login", { replace: true });
+    }
+    
   };
 
   const handleclickUnSavePost = () => {
-    const postPromise = dispatch(UnSavePostAction(user._id,data.post ));
+    if(user){
+    const postPromise = dispatch(UnSavePostAction(user?._id,data.post ));
     postPromise.then((response) => {
        
       console.log("Upload successful:", response.data);
@@ -100,16 +115,13 @@ export const FeedCard = ({data,loading}) => {
       // Set loading to false as the upload is complete (even in case of an error)
       console.error("error:", error);
       
-    });
+    });}
+    else{
+      navigate("../login", { replace: true });
+    }
   };
 
-  const savePost=async()=>{
-      const res=await UserApi.savePost(user._id,data?.post?._id);
-      
-      liked ? setIsSaved(false) :setIsSaved(true);
-      
-    console.log(res)
-  };
+  
 
   return (
     <div className="feed-container">

@@ -29,7 +29,7 @@ const Profile = () => {
   const user = useSelector((state) => state.authReducer.authData);
   const dispatch = useDispatch();
   const profileUserId = params.id;
-  const [follow, setFollow] = useState(!user.following.includes(params.id));
+  const [follow, setFollow] = useState(!user?.following.includes(params.id));
   const [profileUser, setProfileUser] = useState([]);
   const [activeCategory, setActiveCategory] = useState("home");
   let { posts, loading } = useSelector((state) => state.postReducer);
@@ -61,8 +61,8 @@ const Profile = () => {
   };
 
   const createUserChat = async () => {
-    const data = { senderId: user._id, receiverId: params.id };
-    const res = await findChat(user._id, params.id);
+    const data = { senderId: user?._id, receiverId: params.id };
+    const res = await findChat(user?._id, params.id);
     if (res.data !== null && res.status === 200) {
       console.log("userexist");
       navigate("/chat");
@@ -79,7 +79,7 @@ const Profile = () => {
   if (params.id) posts = posts.filter((post) => post.post.userId === params.id);
   
 
-  const editProfile = profileUser._id === user._id;
+  const editProfile = profileUser._id === user?._id;
   console.log(profileUser);
 
   const handleCategoryChange = (category) => {
@@ -124,7 +124,7 @@ const Profile = () => {
               </div>
 
               <div className="profile-bio-edit">
-                {params.id !== user._id &&
+                {params.id !== user?._id &&
                   (follow ? (
                     <button onClick={handleclickFollow}>
                       {" "}
@@ -151,7 +151,7 @@ const Profile = () => {
                   </Link>
                 )}
 
-                {params.id !== user._id && (
+                {params.id !== user?._id && (
                   <button onClick={createUserChat}>
                     chat <RiMessengerLine />
                   </button>

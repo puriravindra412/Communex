@@ -10,7 +10,7 @@ import { IoShareOutline } from "react-icons/io5";
 
 
 import "../../css/post.css";
-import {  useParams } from "react-router-dom";
+import {  useNavigate, useParams } from "react-router-dom";
 import { useDispatch,useSelector } from "react-redux";
 import {  likePost } from "../../api/PostsRequests";
 
@@ -37,10 +37,15 @@ import "react-toastify/dist/ReactToastify.css";
   const [follow, setFollow] = useState(!user?.following?.includes(data?.post?.userId));
   const [isSaved,setIsSaved]=useState(null)
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const handleclickFollow = async () => {
-    dispatch(followUser(data?.post?.userId, user));
-    setFollow(false);
+    if(user){
+      dispatch(followUser(data?.post?.userId, user));
+      setFollow(false);
+    }else{
+      navigate("../login", { replace: true });
+    }
+    
   };
 
   const handleclickUnFollow = () => {
@@ -74,15 +79,21 @@ console.log("data inside post ",data)
   
   
   const handleLike = () => {
-    likePost(data.post._id, user._id);
+    if(user){
+likePost(data.post._id, user._id);
     setLiked((prev) => !prev);
     liked ? setLikes((prev) => prev - 1) : setLikes((prev) => prev + 1);
+  
+    }else{
+      navigate("../login", { replace: true });
+    }
   };
+
   const showComment = () => {
     comments ? setComments(false) : setComments(true);
   };
 
-  const handleclickSavePost = () => {
+  const handleclickSavePost = () => {if(user){
     const postPromise =dispatch(savePostAction(user._id,data.post));
     
     postPromise.then((response) => {
@@ -108,11 +119,16 @@ console.log("data inside post ",data)
         console.error("error:", error);
         
       });
+  }else{
+    navigate("../login", { replace: true });
+  }
+    
   
   };
 
   const handleclickUnSavePost = () => {
-    const postPromise = dispatch(UnSavePostAction(user._id,data.post ));
+    if(user){
+      const postPromise = dispatch(UnSavePostAction(user._id,data.post ));
     postPromise.then((response) => {
        
       console.log("Upload successful:", response.data);
@@ -136,6 +152,10 @@ console.log("data inside post ",data)
       console.error("error:", error);
       
     });
+    }else{
+      navigate("../login", { replace: true });
+    }
+    
   };
 
 

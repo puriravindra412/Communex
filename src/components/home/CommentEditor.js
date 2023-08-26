@@ -11,7 +11,9 @@ import CommentList from './CommentList';
 import { ToastContainer } from 'react-toastify';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from 'react-router-dom';
  const CommentEditor = memo(({data,commentsCount, setCommentsCount,setOpen}) => {
+  const navigate = useNavigate();
     const {  handleSubmit } = useForm();
     const [value, setValue] = useState('');
     const user = useSelector((state) => state.authReducer.authData);
@@ -37,35 +39,19 @@ import "react-toastify/dist/ReactToastify.css";
     
 
     const handleComment = async( e) => {
-      console.log(value)
-      if(value!=='<p><br></p>'&&value!==''){
+      if(user){
+        if(value!=='<p><br></p>'&&value!==''){
        
-        const comment = value;
-        const res =await commentPost(data.post._id, user._id, data.username, comment);
-        
-        setComments(res.data);
-        setCommentsCount((prev) => prev + 1);
-       
-       setValue('')
-       toast.success("Comment posted sucessfull", {
-        position: "top-right",
-        autoClose: 1500,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-     
-       
-      
-      }
-       
-       else{
-        toast.error("Oops! comment section can't be empty", {
+          const comment = value;
+          const res =await commentPost(data.post._id, user._id, data.username, comment);
+          
+          setComments(res.data);
+          setCommentsCount((prev) => prev + 1);
+         
+         setValue('')
+         toast.success("Comment posted sucessfull", {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: false,
           pauseOnHover: true,
@@ -73,8 +59,28 @@ import "react-toastify/dist/ReactToastify.css";
           progress: undefined,
           theme: "light",
         });
+       
+         
         
-       }
+        }
+         
+         else{
+          toast.error("Oops! comment section can't be empty", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          
+         }
+      }else{
+        navigate("../login", { replace: true });
+      }
+      
       };
 console.log("inside comment editor",comments)
   var toolbarOptions = [

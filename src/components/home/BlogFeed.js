@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 const BlogFeed = ({data}) => {
     console.log("inside bloog feed ",data)
   return (
-    <div>
+    <div className='blog'>
     <div className='top-feed-post'>
                 <img src={data.user.profilePicture} alt="ravi" class="profile-post-image"></img>
                 <Link to={`/profile/${data.user._id}`} className="user-name">

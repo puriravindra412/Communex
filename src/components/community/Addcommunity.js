@@ -21,7 +21,7 @@ export const Addcommunity = () => {
         <div className="add-commuinty">
           <h4>Create New Community</h4>
           <Link to="/addCommunity">
-            <button className="community-buuton-icon">
+            <button className="community-button-icon">
               Add New Community <IoPencil />
             </button>
           </Link>

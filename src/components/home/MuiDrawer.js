@@ -1,4 +1,4 @@
-import React, { Fragment, memo, useCallback, useEffect, useState } from 'react'
+import React, {  memo, useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 
@@ -8,16 +8,35 @@ import CommentEditor from './CommentEditor';
 
 const MuiDrawer = memo(({data,user,commentsCount, setCommentsCount,}) => {
   const [open, setOpen] =useState(false);
-  
+  const[direction,setDirection]=useState('right')
+  const [width,setWidth]=useState('450px')
+  useEffect(() => {
+    const handleWindowResize = () => {
+      if (window.innerWidth <= 450) {
+        setDirection('bottom');
+        setWidth('100%')
+      } else {
+        setDirection('right');
+        setWidth('450px')
+      }
+    };
 
+    handleWindowResize(); // Set the initial anchor direction
+
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, []);
   const list = (
-    <Box sx={{ width: "450"}} role="presentation">
+    <Box sx={{ width: width}} role="presentation">
       <List>
         
         <ListItem>
           <FormControl fullWidth>
-          <Box role='presentation' width={400} >
-          <h4>Comment</h4>
+          <Box role='presentation' width={'100%'} style={{padding:'10px'}} >
+          <h5>Comment</h5>
           <CommentEditor  data={data} 
            commentsCount={commentsCount}  setCommentsCount={setCommentsCount} setOpen={setOpen}></CommentEditor>
           </Box>
@@ -34,7 +53,7 @@ const MuiDrawer = memo(({data,user,commentsCount, setCommentsCount,}) => {
     <IconButton sx={{padding:'0',margin:'0',color:'var(--color)'}} onClick={(e)=>setOpen(true)}>
     <GoCommentDiscussion></GoCommentDiscussion>
     </IconButton>
-    <SwipeableDrawer   width={450} anchor={"right"} open={open} onClose={(e) => setOpen(false)}>
+    <SwipeableDrawer   width={width} anchor={direction} open={open} onClose={(e) => setOpen(false)}>
           {list}
     </SwipeableDrawer>
       

@@ -13,6 +13,7 @@ API.interceptors.request.use((req) => {
 });
 export const getPost = (id) => API.get(`/posts/${id}`);
 export const getRecentPost = () => API.get(`/posts/`);
+export const getTrendingPost=()=>API.get(`/posts/getTrendingPosts`)
 export const getBlogPost = () => API.get(`/posts/blog`);
 export const getPostComments=(id)=>API.get(`/posts/postComments/${id}`)
 export const deleteCommentPost=(id,_id)=>API.put(`/posts/${id}/deleteComment`,{_id:_id})

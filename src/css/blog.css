@@ -1,4 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Ysabeau+Office:wght@500&display=swap');
+
+.blog{
+    border-radius:10px ;
+    background-color: var(--background-color);
+    margin: 10px;
+}
 .blog-container{
     padding:10px;
 }

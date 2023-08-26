@@ -22,7 +22,7 @@ export default function SideBar() {
         <ul>
           <li className={activeCategory === "home" ? "active" : ""}>
             <Link
-              to="/"
+              to="/home"
               className="link-styling"
               onClick={() => handleCategoryChange("home")}
             >
@@ -62,7 +62,7 @@ export default function SideBar() {
               <CgCommunity className="list-icon" /> <span>Community</span>{" "}
             </Link>
           </li>
-          <li className={activeCategory === "communeverse" ? "active" : ""}>
+          {/*<li className={activeCategory === "communeverse" ? "active" : ""}>
             <Link
               to="/CommuVerse"
               className="link-styling"
@@ -72,7 +72,7 @@ export default function SideBar() {
               <BsRobot className="list-icon" />
               <span>CommuVerse</span>{" "}
             </Link>{" "}
-          </li>
+  </li>*/}
           {/*<li> <TiGroupOutline className='list-icon' /> <span>Jobs</span> </li>*/}
           {/* <li> <HiOutlineClipboardList className='list-icon' /><span>Internship</span>  </li>*/}
           <li className={activeCategory === "about" ? "active" : ""}>

@@ -6,7 +6,11 @@ import SideBar from "../sideBar/SideBar";
 import MobileSideBar from "../sideBar/MobileSideBar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
+import ExploreLogin from "../rightSideBar/ExploreLogin";
+
 export default function Explore() {
+  const user = useSelector((state) => state.authReducer.authData);
   return (
     <div>
       <NavBar />
@@ -14,6 +18,9 @@ export default function Explore() {
         <SideBar />
         <MobileSideBar />
         <ExploreFeed />
+        { !user && <ExploreLogin />
+          
+      }
         {/*<MainContent />*/}
       </div>
       <ToastContainer

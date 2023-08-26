@@ -3,7 +3,7 @@ import {  BsPersonPlusFill } from "react-icons/bs";
 import { FaCheck } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import * as CommunityApi from "../../api/CommunityRequests.js";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Skeleton } from "@mui/material";
 const toastConfig = {
@@ -20,6 +20,7 @@ const toastConfig = {
 export const TrendingTags = ({ img, name, peoples, posts,loading }) => {
   const user = useSelector((state) => state.authReducer.authData);
   console.log(peoples)
+  const navigate = useNavigate();
   const addUser = (data) => {
     
     CommunityApi.addUserToCommunity(data)
@@ -41,12 +42,17 @@ export const TrendingTags = ({ img, name, peoples, posts,loading }) => {
 
   // Example usage, call 'addUser' when a button is clicked
   const handleJoinButtonClick = () => {
-    const data = {
-      name: name,
-      userId:user._id,
-     
-    };
-    addUser(data);
+    if(user){
+      const data = {
+        name: name,
+        userId:user?._id,
+       
+      };
+      addUser(data);
+    }else{
+      navigate("../login", { replace: true });
+    }
+    
   };
 
   
@@ -63,7 +69,7 @@ export const TrendingTags = ({ img, name, peoples, posts,loading }) => {
         {loading?<Skeleton variant="text" width={50} sx={{fontSize:'10px',marginLeft:"5px"}} animation="wave" />: <p>{peoples.length} people joined</p>}
       </div>
       {loading?<Skeleton variant="circular" width={35} height={35} sx={{marginLeft:"5px"}} animation="wave" />:<button className="trending-tag-box-design-button" onClick={handleJoinButtonClick}>
-        {peoples.find(users=>users.userId===user._id)?<FaCheck color="green" />: <BsPersonPlusFill />}
+        {peoples.find(users=>users.userId===user?._id)?<FaCheck color="green" />: <BsPersonPlusFill />}
       </button>}
     </div>
   );

@@ -3,23 +3,33 @@ import React, { useState } from "react";
 import { BsFillPersonDashFill, BsFillPersonPlusFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { followUser, unfollowUser } from "../../redux/actions/UserAction";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Avatar } from "@mui/material";
 
 export const UserCard = ({ profile, username, userId,  worksAt }) => {
   const user = useSelector((state) => state.authReducer.authData);
   const [follow, setFollow] = useState(!user?.following?.includes(userId));
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const handleclickFollow = async () => {
-    dispatch(followUser(userId, user));
+    if(user){
+      dispatch(followUser(userId, user));
     setFollow(false);
+    }else{
+      navigate("../login", { replace: true });
+    }
+    
   };
 
   const handleclickUnFollow = () => {
-    dispatch(unfollowUser(userId, user));
+    if(user){
+      dispatch(unfollowUser(userId, user));
 
     setFollow(true);
+  }else{
+    navigate("../login", { replace: true });
+  }
+    
   };
   console.log(profile);
   return (

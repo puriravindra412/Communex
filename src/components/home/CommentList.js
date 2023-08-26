@@ -17,7 +17,7 @@ const CommentList = ({comment,userDetails,id,postId,setCommentsCount,commentsAft
     
     const user=useSelector((state)=>state.authReducer.authData)
     
-    const actions=(user._id===id||userDetails._id===user._id)
+    const actions=(user?._id===id||userDetails._id===user?._id)
 
     const deleteComment=async(postId,_id)=>{
 
